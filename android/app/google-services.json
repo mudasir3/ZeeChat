@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "975490880942",
+    "firebase_url": "https://zeechat-564f7.firebaseio.com",
+    "project_id": "zeechat-564f7",
+    "storage_bucket": "zeechat-564f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975490880942:android:d2793a85db99264492a43f",
+        "android_client_info": {
+          "package_name": "com.zee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975490880942-9hanoot977s7i7hua1a7gp2kud0rmfpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyp7VYq3KUm_YdGplCa8j7S2CKqfHmVfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975490880942-9hanoot977s7i7hua1a7gp2kud0rmfpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975490880942:android:6dae060b2b64d7af92a43f",
+        "android_client_info": {
+          "package_name": "com.zeechatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975490880942-ljfdea7u4r9bhvflb5roh6890qi6jntt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zeechatapp",
+            "certificate_hash": "2f2e1e67152f1227e5a5b99766dadc22f5407a78"
+          }
+        },
+        {
+          "client_id": "975490880942-9hanoot977s7i7hua1a7gp2kud0rmfpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyp7VYq3KUm_YdGplCa8j7S2CKqfHmVfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975490880942-9hanoot977s7i7hua1a7gp2kud0rmfpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
