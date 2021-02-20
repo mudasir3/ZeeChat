@@ -1,311 +1,350 @@
-import React, { Component } from 'react';
-import { StyleSheet,
- Text,
- View,Image ,
-TextInput,TouchableOpacity,
-ActivityIndicator,Keyboard} from 'react-native';
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
+} from 'react-native';
 
 import firebase from './FirebaseConfig';
 
 import auth from '@react-native-firebase/auth';
 
-import {_saveToAsync} from "./AsyncStorage"
+import {_saveToAsync} from './AsyncStorage';
 import firestore from '@react-native-firebase/firestore';
-import {authenticateUser} from './api/ApiEndPoints'
+import {authenticateUser} from './api/ApiEndPoints';
 
 var _this;
 export default class VerifyPhoneScreen extends Component {
+  constructor(props) {
+    super(props);
+    _this = this;
+  }
 
-    constructor(props) {
-      super(props);
-      _this=this;
-    }
+  state = {
+    number: '',
+    code: '',
+    setVerificationId: '',
+    recaptchaVerifier: '',
+    confirm: null,
+    codeInput: '',
+    text1: '',
+    text2: '',
+    text3: '',
+    text4: '',
+    text5: '',
+    text6: '',
+    visible: false,
+  };
 
-    state={
-        number :'',
-        code:'',
-        setVerificationId:'',
-        recaptchaVerifier:'',
-        confirm: null,
-          codeInput: '',
-          text1: '',
-          text2: '',
-          text3: '',
-          text4: '',
-          text5: '',
-          text6: '', 
-          visible: false
- 
-    }
+  componentDidMount() {
+    this.confirm = this.props.navigation.getParam('data');
 
-    componentDidMount()
-    {
-        this.confirm = this.props.navigation.getParam('data')
+    console.log(' dataa ' + JSON.stringify(this.confirm));
+  }
 
-        console.log( " dataa " + JSON.stringify(this.confirm))
-
-
-    }
-
-  confirmCode = () =>{
+  confirmCode = () => {
     try {
-      var { codeInput } = this.state;
-      codeInput = this.state.text1 + this.state.text2 + this.state.text3 + this.state.text4 + this.state.text5 + this.state.text6
+      var {codeInput} = this.state;
+      codeInput =
+        this.state.text1 +
+        this.state.text2 +
+        this.state.text3 +
+        this.state.text4 +
+        this.state.text5 +
+        this.state.text6;
 
-      this.setState({visible:true})
-      Keyboard.dismiss()
+      this.setState({visible: true});
+      Keyboard.dismiss();
 
-        this.confirm.confirm(codeInput).
-      then(res => {    
-         
-               var data =this.props.navigation.getParam('data')
+      this.confirm
+        .confirm(codeInput)
+        .then((res) => {
+          var data = this.props.navigation.getParam('data');
 
-              var phoneNumber = data._auth._user.phoneNumber
-              const params = {phoneNumber};
+          var phoneNumber = data._auth._user.phoneNumber;
+          const params = {phoneNumber};
 
-              authenticateUser(params)
-                .then(async res =>{
-                console.log( "reponse " + JSON.stringify(res))
-                
-                this.setState({visible:false})
+          authenticateUser(params).then(async (res) => {
+            console.log('reponse ' + JSON.stringify(res));
 
-                _saveToAsync('userid',res.data.user_id )
-                _saveToAsync('username',res.data.user_id)
-                _saveToAsync('token',res.data.token)
-                
-                _saveToAsync('image',res.data.image)
+            this.setState({visible: false});
 
-                this.props.navigation.navigate('Home')
-              });
+            _saveToAsync('userid', res.data.user_id);
+            _saveToAsync('username', res.data.user_id);
+            _saveToAsync('token', res.data.token);
 
-        
+            _saveToAsync('image', res.data.image);
 
-      })
-      .catch(err =>{       
-        
-        console.log( " verify errorr " + JSON.stringify(err))
+            this.props.navigation.navigate('Home');
+          });
+        })
+        .catch((err) => {
+          console.log(' verify errorr ' + JSON.stringify(err));
 
-        //alert(" error " + err + " " + JSON.stringify(err))
-        this.setState({visible:false})
+          //alert(" error " + err + " " + JSON.stringify(err))
+          this.setState({visible: false});
 
-        if(JSON.stringify(err).includes("the sms code has expired firebase"))
-        {
-          this.props.navigation.navigate('Home')
-        }
-        else{
-          this.props.navigation.navigate('Home')
-        }
-
-      })
-
+          if (
+            JSON.stringify(err).includes('the sms code has expired firebase')
+          ) {
+            this.props.navigation.navigate('Home');
+          } else {
+            this.props.navigation.navigate('Home');
+          }
+        });
     } catch (error) {
       console.log('Invalid code.' + error);
 
-      alert('invalid code')
+      alert('invalid code');
     }
-  }
+  };
 
-  
   onchangeText(value1) {
-    this.setState({ text1: value1 })
+    this.setState({text1: value1});
     this.secondTextInput.focus();
   }
   onchangeText2(value2) {
-    this.setState({ text2: value2 })
+    this.setState({text2: value2});
     this.thirdTextInput.focus();
   }
   onchangeText3(value3) {
-    this.setState({ text3: value3 })
+    this.setState({text3: value3});
     this.fourthTextInput.focus();
   }
   onchangeText4(value4) {
-    this.setState({ text4: value4 })
+    this.setState({text4: value4});
     this.fifthTextInput.focus();
   }
   onchangeText5(value5) {
-    this.setState({ text5: value5 })
+    this.setState({text5: value5});
     this.sixthTextInput.focus();
   }
   onchangeText6(value6) {
-    this.setState({ text6: value6 })
+    this.setState({text6: value6});
   }
 
-render()
-    {
-  
+  render() {
     return (
+      <View style={{flex: 1, backgroundColor: '#FCF4F4'}}>
+        <View style={{alignItems: 'center', marginTop: 30}}></View>
 
-<View style={{ flex:1,backgroundColor:'#FCF4F4'}}>
-
-<View style={{alignItems:'center',marginTop:30}}>
-</View>
-
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.1,alignItems:'center',marginTop:100}}>
-
-<Image style={{marginTop: 5, marginLeft: 5,width: 180,height: 180,borderRadius: 90}}
-            source={require("../assets/login.png")}
-            />
-
-</View>
-
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.8}}>
-  <View style={styles.homeContainer}>
-
-    <Text style={{marginTop:60,marginBottom:20,color:'#949494',fontSize:16}}>Enter the verification code</Text>
-
-        <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-
-        <TextInput
-          style={styles.codeInput}
-          ref={(input1) => { this.input1 = input1; }}
-          keyboardType='numeric'
-          maxLength={1}
-          placeholder={'0'}
-          onChangeText={(value1) => { this.onchangeText(value1) }}
-          blurOnSubmit={false}
-        />
-
-        <TextInput
-          style={styles.codeInput}
-          ref={(input2) => { this.secondTextInput = input2; }}
-          placeholder={'0'}
-          maxLength={1}
-          keyboardType='numeric'
-          onChangeText={(value2) => { this.onchangeText2(value2) }}
-          blurOnSubmit={false}
-        />
-
-        <TextInput
-          style={styles.codeInput}
-          ref={(input3) => { this.thirdTextInput = input3; }}
-          maxLength={1}
-          keyboardType='numeric'
-          placeholder={'0'}
-          onChangeText={(value3) => { this.onchangeText3(value3) }}
-          blurOnSubmit={false}
-        />
-
-        <TextInput
-          ref={(input4) => { this.fourthTextInput = input4; }}
-          style={styles.codeInput}
-          keyboardType='numeric'
-          maxLength={1}
-          placeholder={'0'}
-          onChangeText={(value4) => { this.onchangeText4(value4) }}
-          blurOnSubmit={false}
-        />
-
-        <TextInput
-          ref={(input5) => { this.fifthTextInput = input5; }}
-          style={styles.codeInput}
-          keyboardType='numeric'
-          maxLength={1}
-          placeholder={'0'}
-          onChangeText={(value5) => { this.onchangeText5(value5) }}
-          blurOnSubmit={false}
-        />
-
-        <TextInput
-          ref={(input6) => { this.sixthTextInput = input6; }}
-          style={styles.codeInput}
-          keyboardType='numeric'
-          maxLength={1}
-          placeholder={'0'}
-          onChangeText={(value6) => { this.onchangeText6(value6) }}
-          blurOnSubmit={false}
-        />
-
+        <View
+          style={{
+            alignContent: 'center',
+            justifyContent: 'center',
+            flex: 0.1,
+            alignItems: 'center',
+            marginTop: 100,
+          }}>
+          <Image
+            style={{
+              marginTop: 5,
+              marginLeft: 5,
+              width: 180,
+              height: 180,
+              borderRadius: 90,
+            }}
+            source={require('../assets/login.png')}
+          />
         </View>
 
-  </View>
+        <View
+          style={{alignContent: 'center', justifyContent: 'center', flex: 0.8}}>
+          <View style={styles.homeContainer}>
+            <Text
+              style={{
+                marginTop: 60,
+                marginBottom: 20,
+                color: '#949494',
+                fontSize: 16,
+              }}>
+              Enter the verification code
+            </Text>
 
-          <ActivityIndicator 
-              visible = {this.state.visible}
-              size="large" color="#ff0000"
-              animating={this.state.visible}
-              ></ActivityIndicator>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignContent: 'center',
+                justifyContent: 'center',
+              }}>
+              <TextInput
+                style={styles.codeInput}
+                ref={(input1) => {
+                  this.input1 = input1;
+                }}
+                keyboardType="numeric"
+                maxLength={1}
+                placeholder={'0'}
+                onChangeText={(value1) => {
+                  this.onchangeText(value1);
+                }}
+                blurOnSubmit={false}
+              />
 
-</View>
+              <TextInput
+                style={styles.codeInput}
+                ref={(input2) => {
+                  this.secondTextInput = input2;
+                }}
+                placeholder={'0'}
+                maxLength={1}
+                keyboardType="numeric"
+                onChangeText={(value2) => {
+                  this.onchangeText2(value2);
+                }}
+                blurOnSubmit={false}
+              />
 
+              <TextInput
+                style={styles.codeInput}
+                ref={(input3) => {
+                  this.thirdTextInput = input3;
+                }}
+                maxLength={1}
+                keyboardType="numeric"
+                placeholder={'0'}
+                onChangeText={(value3) => {
+                  this.onchangeText3(value3);
+                }}
+                blurOnSubmit={false}
+              />
 
+              <TextInput
+                ref={(input4) => {
+                  this.fourthTextInput = input4;
+                }}
+                style={styles.codeInput}
+                keyboardType="numeric"
+                maxLength={1}
+                placeholder={'0'}
+                onChangeText={(value4) => {
+                  this.onchangeText4(value4);
+                }}
+                blurOnSubmit={false}
+              />
 
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.1,marginBottom:20}}>
+              <TextInput
+                ref={(input5) => {
+                  this.fifthTextInput = input5;
+                }}
+                style={styles.codeInput}
+                keyboardType="numeric"
+                maxLength={1}
+                placeholder={'0'}
+                onChangeText={(value5) => {
+                  this.onchangeText5(value5);
+                }}
+                blurOnSubmit={false}
+              />
 
-<TouchableOpacity
-        //onPress={() => this.props.navigation.navigate('Home')}
-        onPress={() => this.confirmCode()}
-        style={styles.btnpink}>
-      <Text style={{textAlign:'center',color:'#ffffff',fontSize:16}}>Confirm Code</Text>
+              <TextInput
+                ref={(input6) => {
+                  this.sixthTextInput = input6;
+                }}
+                style={styles.codeInput}
+                keyboardType="numeric"
+                maxLength={1}
+                placeholder={'0'}
+                onChangeText={(value6) => {
+                  this.onchangeText6(value6);
+                }}
+                blurOnSubmit={false}
+              />
+            </View>
+          </View>
 
-    </TouchableOpacity>
-</View>
+          <ActivityIndicator
+            visible={this.state.visible}
+            size="large"
+            color="#ff0000"
+            animating={this.state.visible}></ActivityIndicator>
+        </View>
 
-</View>
+        <View
+          style={{
+            alignContent: 'center',
+            justifyContent: 'center',
+            flex: 0.1,
+            marginBottom: 20,
+          }}>
+          <TouchableOpacity
+            //onPress={() => this.props.navigation.navigate('Home')}
+            onPress={() => this.confirmCode()}
+            style={styles.btnpink}>
+            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 16}}>
+              Confirm Code
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-      homeContainer: {
-        alignItems: 'center',
-        padding: 10,
-        margin: 10,
-        marginTop: 20,
-        justifyContent: 'center',
-    },
-    btnwhite: {
-        fontSize: 16,
-        width:150,
-        borderWidth: 0.5,
-        textAlign: 'left',
-        backgroundColor : '#ffffff',
-        paddingTop: 15,
-        paddingBottom : 15,
-        padding: 17,
-        color: '#e15d86',
-        borderColor: '#000000',
-        borderRadius: 15,
-        margin: 15,
-        textTransform: 'uppercase',
-    },
-    btnpink: {
-      fontSize: 16,
-      borderWidth: 0.5,
-      textAlign: 'center',
-      alignSelf: 'stretch',
-      justifyContent:'center',
-      backgroundColor : '#E20030',
-      paddingVertical:18,
-      marginHorizontal:30,
-      color: '#e15d86',
-      borderColor: '#000000',
-      borderRadius: 30,
-      textTransform: 'uppercase',
-  },
-  
-    codeInput: {
-      alignSelf: 'stretch',
-      justifyContent: 'center',
-      textAlign: 'center',
-      alignContent: 'center',
-      fontSize: 20,
-      padding: 10,
-      paddingTop: 15,
-      paddingBottom: 15,
-      borderBottomColor: '#b9b9b9',
-      borderBottomWidth: 2,
-      marginTop: 5,
-      marginRight: 5,
-      marginBottom: 5,
-      marginLeft: 5,
-      backgroundColor: '#fff',
-      flex: 1,
-  },
-  });
 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  homeContainer: {
+    alignItems: 'center',
+    padding: 10,
+    margin: 10,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+  btnwhite: {
+    fontSize: 16,
+    width: 150,
+    borderWidth: 0.5,
+    textAlign: 'left',
+    backgroundColor: '#ffffff',
+    paddingTop: 15,
+    paddingBottom: 15,
+    padding: 17,
+    color: '#e15d86',
+    borderColor: '#000000',
+    borderRadius: 15,
+    margin: 15,
+    textTransform: 'uppercase',
+  },
+  btnpink: {
+    fontSize: 16,
+    borderWidth: 0.5,
+    textAlign: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: '#E20030',
+    paddingVertical: 18,
+    marginHorizontal: 30,
+    color: '#e15d86',
+    borderColor: '#000000',
+    borderRadius: 30,
+    textTransform: 'uppercase',
+  },
 
+  codeInput: {
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignContent: 'center',
+    fontSize: 20,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderBottomColor: '#b9b9b9',
+    borderBottomWidth: 2,
+    marginTop: 5,
+    marginRight: 5,
+    marginBottom: 5,
+    marginLeft: 5,
+    backgroundColor: '#fff',
+    flex: 1,
+  },
+});
