@@ -9,8 +9,8 @@ import * as Facebook from "expo-facebook";
 
 import {request, PERMISSIONS, RESULTS, requestMultiple} from 'react-native-permissions';
 
-import {Login,fbgraphapi,socialLogin} from "./api/ApiEndPoints";
-import {_saveToAsync} from "./AsyncStorage"
+import {Login,fbgraphapi,socialLogin} from "../api/ApiEndPoints";
+import {_saveToAsync} from "../components/AsyncStorage"
 
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
@@ -186,42 +186,32 @@ render()
     {  
     return (
 
-<View style={{ flex:1,backgroundColor:'#E20030'}}>
-
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.2,alignItems:'center',marginTop:140}}>
-
-<Image style={{marginTop: 5, marginLeft: 5,width: 200,height: 200,borderRadius: 100}}
-            source={require("../assets/login.png")}
+<View style={styles.container}>
+  <View style={styles.innerContainer}>
+    <Image style={styles.img}
+            source={require("../../assets/login.png")}
             />
+  </View>
 
-        
-</View>
+  <View style={styles.text}>
+    <Text  style={{fontSize:24}} >LOGIN </Text>
+  </View>
 
-<View style={{alignItems:'center',marginTop:80}}>
-<Text  style={{fontSize:24}} >LOGIN </Text>
-</View>
-
-
-
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.8}}>
-  <View style={styles.homeContainer}>
+  <View style={styles.mainContainer}>
+    <View style={styles.homeContainer}>
 
     <TouchableOpacity
         onPress={this.facebookLogin}
-       //onPress={()=> this.pickImage()}
-      style={styles.btnwhiteoutline}>
-      <Text style={{textAlign:'center' , color:'white',fontSize:16}} >LOGIN USING FACEBOOK</Text>
-
+        style={styles.btnwhiteoutline}>
+          <Text style={styles.whiteText} >LOGIN USING FACEBOOK</Text>
     </TouchableOpacity>
  
 
     <TouchableOpacity
-      onPress={() =>  this.props.navigation.navigate('phoneauth')}
-      style={styles.btnwhite}>
-      <Text style={{textAlign:'center',color:'#E20030',fontSize:16}}> REGISTER WITH PHONE</Text>
+        onPress={() =>  this.props.navigation.navigate('phoneauth')}
+        style={styles.btnwhite}>
+          <Text style={styles.redText}> REGISTER WITH PHONE</Text>
     </TouchableOpacity>
-   
-
   </View>
 </View>
 </View>
@@ -231,43 +221,42 @@ render()
   
   const styles = StyleSheet.create({
     container: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flex:1,backgroundColor:'#E20030'
     },
     innerContainer :{
-      marginTop:10,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-    } ,
-    BottomContainer :{
-      //flex:1,
-
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      margin: 20,
-    } ,
-    linearGradient: {
-      flex: 1,
-      flexDirection: 'column',
-      justifyContent: 'center'
+      alignContent:'center',
+      justifyContent:'center',
+      flex:0.2,
+      alignItems:'center',
+      marginTop:140
     },
-     ViewContainer :{
-    //  backgroundColor: '#ffffff',
-      width :250,
-      textAlign: 'left',
-      color: 'white',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderBottomColor: 'white',
-      // borderRadius:10,
-      borderBottomWidth:1,
-      // borderColor :'#000000',
-      marginTop:10,
-      marginBottom: 30
-      },
-      homeContainer: {
+    mainContainer :{
+      alignContent:'center',
+      justifyContent:'center',
+      flex:0.8
+    },
+    img:{
+      marginTop: 5,
+       marginLeft: 5,
+       width: 200,
+       height: 200,
+       borderRadius: 100
+    },
+    text:{
+      alignItems:'center',
+      marginTop:80
+    },
+    whiteText:{
+      textAlign:'center' , 
+      color:'white',
+      fontSize:16
+    },
+    redText:{
+      textAlign:'center',
+      color:'#E20030',
+      fontSize:16
+    },
+    homeContainer: {
         alignItems: 'center',
         padding: 10,
         margin: 10,

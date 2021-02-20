@@ -5,9 +5,8 @@ import { View, Text, Image,ImageBackground, StyleSheet,Keyboard,
 
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
-import BackButton from '../assets/back.svg';
 import firestore from '@react-native-firebase/firestore';
-import {_saveToAsync,_getDataAsync} from "./AsyncStorage"
+import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
 
 import { withNavigation } from 'react-navigation';
 import { NavigationEvents } from 'react-navigation';
@@ -15,9 +14,9 @@ import { NavigationEvents } from 'react-navigation';
 import { showMessage, hideMessage } from "react-native-flash-message";
 
 import io from "socket.io-client";
-import SocketProvider from './socket'
+import SocketProvider from '../components/socket'
 
-import {getMessages,sendMessage,JoinRoom} from './api/ApiEndPoints'
+import {getMessages,sendMessage,JoinRoom} from '../api/ApiEndPoints'
 
 
 var position = ''
@@ -25,13 +24,13 @@ var position = ''
 
 var _this;
 var socket;
-var theme="require('../assets/background.jpg')"
+var theme="require('../../assets/background.jpg')"
 
   class BackgroundImage extends React.Component {
 
     render() {
 
-      //let background = require('../assets/background.jpg')
+      //let background = require('../../assets/background.jpg')
       return (
         <ImageBackground source={this.props.theme}
           style={{
@@ -55,7 +54,7 @@ class ChatRoom extends Component {
   }
 
   state ={
-    theme:"require('../assets/background.jpg')",
+    theme:"require('../../assets/background.jpg')",
     token:'',
     RoomName :'',
     Roomid :'',
@@ -93,51 +92,51 @@ class ChatRoom extends Component {
      ],
      giftslist:[
        {
-         "src" :require("../assets/ferrari.png"),
+         "src" :require("../../assets/ferrari.png"),
          "coins":"$300",
          "name":"ferrari"
        },
        {
-        "src" :require("../assets/football.png"),
+        "src" :require("../../assets/football.png"),
         "coins":"$100",
         "name":"football"
       }
      ],
      themeList:[
       {
-        "src" :require("../assets/theme1.jpg"),
+        "src" :require("../../assets/theme1.jpg"),
       },
       {
-        "src" :require("../assets/theme2.jpg"),
+        "src" :require("../../assets/theme2.jpg"),
       },
       {
-        "src" :require("../assets/theme3.jpg"),
+        "src" :require("../../assets/theme3.jpg"),
       },      {
-        "src" :require("../assets/theme4.jpg"),
+        "src" :require("../../assets/theme4.jpg"),
       },      {
-        "src" :require("../assets/theme5.jpg"),
+        "src" :require("../../assets/theme5.jpg"),
       },      {
-        "src" :require("../assets/theme6.jpg"),
+        "src" :require("../../assets/theme6.jpg"),
       },      {
-        "src" :require("../assets/theme7.jpg"),
+        "src" :require("../../assets/theme7.jpg"),
       },      {
-        "src" :require("../assets/theme8.jpg"),
+        "src" :require("../../assets/theme8.jpg"),
       },      {
-        "src" :require("../assets/theme9.jpg"),
+        "src" :require("../../assets/theme9.jpg"),
       },      {
-        "src" :require("../assets/theme10.jpg"),
+        "src" :require("../../assets/theme10.jpg"),
       },      {
-        "src" :require("../assets/theme11.jpg"),
+        "src" :require("../../assets/theme11.jpg"),
       },      {
-        "src" :require("../assets/theme12.jpg"),
+        "src" :require("../../assets/theme12.jpg"),
       },      {
-        "src" :require("../assets/theme13.jpg"),
+        "src" :require("../../assets/theme13.jpg"),
       },      {
-        "src" :require("../assets/theme14.jpg"),
+        "src" :require("../../assets/theme14.jpg"),
       },      {
-        "src" :require("../assets/theme15.jpg"),
+        "src" :require("../../assets/theme15.jpg"),
       },      {
-        "src" :require("../assets/theme16.jpg"),
+        "src" :require("../../assets/theme16.jpg"),
       }
     ]
 
@@ -224,7 +223,7 @@ socketEmitEvent =()=>{
         //let object = JSON.parse(response);
         console.log('useriddddd : ', response);
         this.setState({userid:response ,
-          theme:require('../assets/background.jpg')})
+          theme:require('../../assets/background.jpg')})
 
        // this.initializesocket(response)
 
@@ -326,7 +325,7 @@ getMessages=(token) => {
                         :
                         <Image style={{marginTop: 5,marginLeft: 5, width: 40,height: 40,borderRadius :20}}
                         
-                          source={require("../assets/user.png")}
+                          source={require("../../assets/user.png")}
                          />
                          }
                       </View>
@@ -414,7 +413,7 @@ getMessages=(token) => {
                           />
           <View style={{flexDirection:'row'}} >
             <Image style={{ width: 30, height: 30,resizeMode:'contain'}}
-                                source={require("../assets/coin.png")}
+                                source={require("../../assets/coin.png")}
                               />   
             <Text style={{textAlign:'center',justifyContent:'center',marginTop:5}}>{item.coins}</Text>
           </View>                    
@@ -466,7 +465,7 @@ getMessages=(token) => {
             <Image style={{marginTop: 5,marginLeft: 10,
               width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
             }}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
               />
               <Text style={{marginLeft: 5,marginRight:5,width:100,multiline:true,
                 fontSize:10,textAlign:'center'}}>{item.userid}</Text>
@@ -485,12 +484,12 @@ getMessages=(token) => {
   
   render() {
 
-    let Img = require("../assets/chat.jpg")
+    let Img = require("../../assets/chat.jpg")
 
     // if (this.state.image != '') {
     //   Img = this.state.image;
     // } else {
-    //   Img = require("../assets/chat.jpg")
+    //   Img = require("../../assets/chat.jpg")
     // }
 
     return (
@@ -513,7 +512,7 @@ getMessages=(token) => {
         style={{borderRadius:15,flexDirection:'row',backgroundColor:'#ffffff',height: 90,paddingTop:10,margin:8}}
         >
           <Image style={{width: 80,height: 80}}
-            source={require("../assets/chat.jpg")}
+            source={require("../../assets/chat.jpg")}
             />
 
           <View>
@@ -529,13 +528,13 @@ getMessages=(token) => {
                   themeModal:true
                 })} >
               <Image style={{marginTop: 5, marginLeft: 30,width: 20,height: 20}}
-                source={require("../assets/changetheme.jpg")}
+                source={require("../../assets/changetheme.jpg")}
                 />
               </TouchableOpacity>
               
 
             <Image style={{marginTop: 5, marginLeft: 10,width: 20,height: 20,borderRadius: 20}}
-              source={require("../assets/exit.png")}
+              source={require("../../assets/exit.png")}
               /> 
               
             </View>
@@ -586,14 +585,14 @@ getMessages=(token) => {
             <View>
             <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
             }}
-              source={require("../assets/microphone.png")}
+              source={require("../../assets/microphone.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>Mr.ABC1</Text>
               </View> :
               <View>
                <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
                 }}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>{this.state.user1}</Text>
               </View>
@@ -607,14 +606,14 @@ getMessages=(token) => {
             <View>
             <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
             }}
-              source={require("../assets/microphone.png")}
+              source={require("../../assets/microphone.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>Mr.ABC2</Text>
               </View> :
               <View>
                <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
                 }}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>{this.state.user2}</Text>
               </View>
@@ -627,14 +626,14 @@ getMessages=(token) => {
             <View>
             <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
             }}
-              source={require("../assets/microphone.png")}
+              source={require("../../assets/microphone.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>Mr.ABC3</Text>
               </View> :
               <View>
                <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
                 }}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>{this.state.user3}</Text>
               </View>
@@ -647,14 +646,14 @@ getMessages=(token) => {
             <View>
             <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
             }}
-              source={require("../assets/microphone.png")}
+              source={require("../../assets/microphone.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>Mr.ABC4</Text>
               </View> :
               <View>
                <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
                 }}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>{this.state.user4}</Text>
               </View>
@@ -667,14 +666,14 @@ getMessages=(token) => {
             <View>
             <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
             }}
-              source={require("../assets/microphone.png")}
+              source={require("../../assets/microphone.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>Mr.ABC5</Text>
               </View> :
               <View>
                <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,resizeMode:'contain',alignSelf:'center'
                 }}
-              source={require("../assets/user.png")}
+              source={require("../../assets/user.png")}
               />
               <Text style={{width:50,marginLeft: 5,marginRight:5,multiline:true,fontSize:10,textAlign:'center'}}>{this.state.user5}</Text>
               </View>
@@ -700,7 +699,7 @@ getMessages=(token) => {
               <TouchableOpacity
                              >
             <Image style={{marginTop: 5,marginLeft: 5, width: 40,height: 40,borderRadius :20}}
-                          source={require("../assets/speaker.png")}
+                          source={require("../../assets/speaker.png")}
                          />
                          </TouchableOpacity>
               <TextInput
@@ -724,7 +723,7 @@ getMessages=(token) => {
               <TouchableOpacity
               onPress={()=> this.setState({modalVisible:true})}>
                   <Image style={{marginTop: 5,marginLeft: 15, width: 30,height: 30,borderRadius :20}}
-                              source={require("../assets/gift.png")}
+                              source={require("../../assets/gift.png")}
                             />
               </TouchableOpacity>
             </View> 
@@ -757,7 +756,7 @@ getMessages=(token) => {
 
                       <Image style={{marginTop: 5, marginRight: 10,width: 20,height: 20,resizeMode:'contain',
                                   }}
-                                    source={require("../assets/close.png")}
+                                    source={require("../../assets/close.png")}
                                     />
                       </TouchableOpacity>
 
@@ -804,13 +803,13 @@ getMessages=(token) => {
 
                       <Image style={{marginTop: 5, marginRight: 10,width: 20,height: 20,resizeMode:'contain',
                                   }}
-                                    source={require("../assets/close.png")}
+                                    source={require("../../assets/close.png")}
                                     />        
                       </TouchableOpacity>
 
                     <View style={{alignSelf:'center',marginVertical:10}}>
                       <Image style={{marginTop: 5,marginLeft: 5, width: 40,height: 40,borderRadius :20}}                
-                        source={require("../assets/user.png")}
+                        source={require("../../assets/user.png")}
                        />
                     </View>
 
@@ -826,7 +825,7 @@ getMessages=(token) => {
                           style={{borderRadius: 20,backgroundColor:'#ffffff',marginHorizontal:10}}>
                             <Image style={{width: 50,height: 50,resizeMode:'contain',alignSelf:'center'
                             }}
-                              source={require("../assets/gift.png")}
+                              source={require("../../assets/gift.png")}
                               />
                               <Text style={{marginLeft: 5,marginRight:5,marginBottom:10}}>Send Gift</Text>
                           </TouchableOpacity>
@@ -837,7 +836,7 @@ getMessages=(token) => {
                           style={{borderRadius: 20,backgroundColor:'#ffffff',marginHorizontal:10}}>
                             <Image style={{width: 50,height: 50,resizeMode:'contain',alignSelf:'center'
                             }}
-                              source={require("../assets/addfriend.png")}
+                              source={require("../../assets/addfriend.png")}
                               />
                               <Text style={{marginLeft: 5,marginRight:5,marginBottom:10}}>Add Friend</Text>
                           </TouchableOpacity>
@@ -877,7 +876,7 @@ getMessages=(token) => {
 
                       <Image style={{marginTop: 5, marginRight: 10,width: 20,height: 20,resizeMode:'contain',
                                   }}
-                                    source={require("../assets/close.png")}
+                                    source={require("../../assets/close.png")}
                                     />
                       </TouchableOpacity>
 

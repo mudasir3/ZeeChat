@@ -17,7 +17,7 @@ export default class Moment extends Component {
               style={{alignSelf:'flex-start'}}
               onPress={()=> this.props.navigation.openDrawer()}>
               <Image style={{marginTop: 5, marginLeft: 5,width: 40,height: 40,borderRadius: 20}}
-                          source={require("../assets/avatar.png")}
+                          source={require("../../assets/avatar.png")}
                           />
             </TouchableOpacity>
 
@@ -30,7 +30,7 @@ export default class Moment extends Component {
         style={{borderRadius:15,flexDirection:'row',backgroundColor:'#ffffff',height: 80,margin:8}}
         >
           <Image style={{width: 50,height: 50,margin:20}}
-            source={require("../assets/badge.png")}
+            source={require("../../assets/badge.png")}
             />
 
           <View >
@@ -55,7 +55,7 @@ export default class Moment extends Component {
         >
           
           <Image style={{width: 30,height: 30,margin:10}}
-            source={require("../assets/user.png")}
+            source={require("../../assets/user.png")}
             />
 
           <View>
@@ -66,7 +66,7 @@ export default class Moment extends Component {
               </Text>
 
               <Image style={{marginTop: 5, marginLeft: 5,width: 20,height: 20,borderRadius: 20}}
-                source={require("../assets/pak.png")}
+                source={require("../../assets/pak.png")}
                 />          
             </View>
 
@@ -82,15 +82,15 @@ export default class Moment extends Component {
             <View style ={{flexDirection:'row'}}>
 
             <Image style={{marginTop: 5, marginLeft: 5,width: 20,height: 20,borderRadius: 20}}
-              source={require("../assets/badge.png")}
+              source={require("../../assets/badge.png")}
               />
 
             <Image style={{marginTop: 5, marginLeft: 5,width: 20,height: 20,borderRadius: 20}}
-              source={require("../assets/badge.png")}
+              source={require("../../assets/badge.png")}
               />
 
             <Image style={{marginTop: 5, marginLeft: 5,width: 20,height: 20,borderRadius: 20}}
-              source={require("../assets/badge.png")}
+              source={require("../../assets/badge.png")}
               />
             </View>
           </View>
@@ -124,10 +124,10 @@ export default class Moment extends Component {
               <View style ={{flexDirection:'row',marginBottom:10}}>
 
 <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,borderRadius: 20}}
-  source={require("../assets/share.png")}
+  source={require("../../assets/share.png")}
   />
 <Image style={{marginTop: 5, marginLeft: 100,width: 20,height: 20,alignSelf:'center'}}
-  source={require("../assets/like.png")}
+  source={require("../../assets/like.png")}
   />
         <Text style={{textAlign:'center',color:"#000000",marginTop:5,padding:5}}>
           5
@@ -135,14 +135,14 @@ export default class Moment extends Component {
 
 
 <Image style={{marginTop: 5, marginLeft: 15,width: 20,height: 20,alignSelf:'center'}}
-  source={require("../assets/comment.png")}
+  source={require("../../assets/comment.png")}
   />
    <Text style={{textAlign:'center',color:"#000000",marginTop:5,padding:5}}>
           3
         </Text>
 
         <Image style={{marginTop: 5, marginLeft: 15,width: 20,height: 20,alignSelf:'center'}}
-  source={require("../assets/gift.png")}
+  source={require("../../assets/gift.png")}
   />
    <Text style={{textAlign:'center',color:"#000000",marginTop:5,padding:5}}>
           8

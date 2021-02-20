@@ -4,8 +4,8 @@ import { View, Text, Image, FlatList ,TouchableOpacity,StyleSheet,ActivityIndica
 import {TabView,TabBar} from 'react-native-tab-view';
 
 import firestore from '@react-native-firebase/firestore';
-import {_saveToAsync,_getDataAsync} from "./AsyncStorage"
-import {getRooms} from './api/ApiEndPoints'
+import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
+import {getRooms} from '../api/ApiEndPoints'
 
 
 import { withNavigation } from 'react-navigation';
@@ -145,7 +145,8 @@ class RoomHomeScreen extends Component {
  
   renderScene = (route, jumpTo ) => {
 
-    return<View style={{borderRadius:10}}>
+    return<View
+     style={{borderRadius:10}}>
     <FlatList
       style={{marginHorizontal:10 , borderRadius:10}}
       onRefresh={()=> this.reloadRoomsList()}
@@ -175,53 +176,46 @@ class RoomHomeScreen extends Component {
                      "anouncement" : item.anouncement,
                      "image":item.image
                     })}
-      style={{borderRadius:15,flexDirection:'row',backgroundColor:'#ffffff',height: 80,marginVertical:10}}
+      style={styles.roomItemContainer}
       >
-        <Image style={{width: 80,height: 80,borderRadius:10}}
-          source={require("../assets/chat.jpg")}
+        <Image style={styles.roomItemImg}
+          source={require("../../assets/chat.jpg")}
           />
 
         <View>
           <View style ={{flexDirection:'row'}}>
 
-            <Image style={{marginTop: 5, marginLeft: 5,width: 20,height: 20,borderRadius: 20}}
-              source={require("../assets/pak.png")}
+            <Image style={styles.roomItemFlagImg}
+              source={require("../../assets/pak.png")}
               />
 
-            <Text style={{textAlign:'center',color:"#000000",marginTop:5}}>
+            <Text style={styles.roomItemText}>
               {item.name}
             </Text>
           </View>
 
           <View style ={{flexDirection:'row'}}>
 
-            <View style={{backgroundColor:'green',borderRadius:20,marginLeft:20,paddingHorizontal:10}}>
-              {/* <Text style={{textAlign:'center',color:"#000000"}}>
-                Family
-              </Text> */}
+            <View style={styles.roomItemInnerContainer}>
+            
             </View>
           </View>
 
-          <Text style={{textAlign:'center',color:"#000000",marginTop:5 ,marginLeft:10 }}>
+          <Text style={styles.roomItemText,{marginLeft:10 }}>
             Welcome New Members
           </Text>
         </View>
 
        
         <View style={{marginLeft:5,marginTop:5}}>
-          <View style ={{flexDirection:'row'}}>
+          <View >
 
         </View>
 
-        <View style ={{flexDirection:'row'}}>
+        <View >
 
-          <View style ={{flexDirection:'row'}}>
-            {/* <Image style={{marginTop: 5, marginLeft: 5,width: 20,height: 20,borderRadius: 20}}
-              source={require("../assets/user.png")}
-              />
-              <Text style={{textAlign:'center',color:"#000000",marginTop:5}}>
-                100
-            </Text> */}
+          <View >
+          
           </View>
         </View>
 
@@ -235,53 +229,48 @@ class RoomHomeScreen extends Component {
     const index = this.state.index
     const routes = this.state.routes
     return (
-      <View style={{flex:1,backgroundColor:'#dddddd'}} >
+      <View style={styles.container} >
 
-      <View style={{ backgroundColor:"#D82020",padding:8,flexDirection:'row'}}>
+      <View style={styles.topContainer}>
           <TouchableOpacity
             onPress={()=> this.props.navigation.openDrawer()}>
-            <Image style={{marginTop: 5, marginLeft: 5,width: 40,height: 40,borderRadius: 20}}
-                        source={require("../assets/avatar.png")}
+            <Image style={styles.img}
+                    source={require("../../assets/avatar.png")}
                         />
 
           </TouchableOpacity>
 
-          <Text style={{ backgroundColor:"#D82020",marginLeft:50,
-        color:'#ffffff',fontSize:20,alignSelf:'center'}}>Welcome To Zee</Text>
+          <Text style={styles.text}>Welcome To Zee</Text>
 
         </View>
 
 
-      <View style={{flex:1,marginHorizontal:10,marginTop:10,backgroundColor:'#dddddd'}} >
-
+      <View style={styles.middleContainer} >
 
       <TouchableOpacity 
-        style={{borderRadius:15,flexDirection:'row',backgroundColor:'#ffffff',
-        height: 80,marginTop:10, elevation:5,marginBottom:20}}
+        style={styles.createRoomCard}
         onPress={() => this.props.navigation.navigate('createNewRoom')}
 
         >
-          <Image style={{width: 40,height: 40,borderRadius:30,padding:20, margin:20}}
-            source={require("../assets/addicon.png")}
+          <Image style={styles.createImg}
+            source={require("../../assets/addicon.png")}
             />
 
           <View>
             <View style ={{flexDirection:'row'}}
               >
 
-              <Text style={{textAlign:'center',color:"#000000",marginTop:15,marginLeft:5}}>
+              <Text style={styles.createText,{ marginTop:15}}>
                 CREATE NEW ROOM
               </Text>
             </View>
 
-            <Text style={{textAlign:'center',color:"#000000",marginTop:10 ,marginLeft:5 }}>
+            <Text style={styles.createText,{ marginTop:10}}>
               Start your journey on Zee
             </Text>
           </View>
 
-         
       </TouchableOpacity>
-
 
       <TabView
         navigationState={{index,routes} }
@@ -297,24 +286,56 @@ class RoomHomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabStyle: {},
- scrollStyle: {
-   backgroundColor: 'white',
-   paddingLeft: 65,
-   paddingRight: 65,
-   // justifyContent: 'center',
- },
- tabBarTextStyle: {
-   fontSize: 14,
-   fontWeight: 'normal',
-   color:'#000000'
- },
- underlineStyle: {
-   height: 3,
-   backgroundColor: 'red',
-   borderRadius: 3,
-   width: 15,
- },
+  container:{
+    flex:1,
+    backgroundColor:'#dddddd'
+  },
+  topContainer:{
+    backgroundColor:"#D82020",
+    padding:8,
+    flexDirection:'row'
+  },
+  middleContainer:{
+    flex:1,
+    marginHorizontal:10,
+    marginTop:10,
+    backgroundColor:'#dddddd'
+  },
+  createRoomCard:{
+    borderRadius:15,
+    flexDirection:'row',
+    backgroundColor:'#ffffff',
+        height: 80,
+        marginTop:10, 
+        elevation:5,
+        marginBottom:20
+  },
+  createImg:{
+    width: 40,
+    height: 40,
+    borderRadius:30,
+    padding:20,
+     margin:20
+  },
+  createText:{
+    textAlign:'center',
+    color:"#000000",
+    marginLeft:5
+  },
+  img:{
+    marginTop: 5,
+     marginLeft: 5,
+     width: 40,
+     height: 40,
+     borderRadius: 20
+  },
+  text:{
+    backgroundColor:"#D82020",
+    marginLeft:50,
+        color:'#ffffff',
+        fontSize:20,
+        alignSelf:'center'
+  },
  tabbar: {
   backgroundColor: '#D82020',
 },
@@ -327,7 +348,39 @@ label: {
 tabStyle: {
   width: 'auto',
 },
-});
+roomItemContainer:{
+  borderRadius:15,
+  flexDirection:'row',
+  backgroundColor:'#ffffff',
+  height: 80,
+  marginVertical:10
+},
+roomItemInnerContainer:{
+  backgroundColor:'green',
+  borderRadius:20,
+  marginLeft:20,
+  paddingHorizontal:10
+},
+roomItemImg:{
+  width: 80,
+  height: 80,
+  borderRadius:10
+},
+roomItemFlagImg:{
+  marginTop: 5,
+   marginLeft: 5,
+   width: 20,
+   height: 20,
+   borderRadius: 20
+},
+roomItemText:{
+  textAlign:'center',
+  color:"#000000",
+  marginTop:5
+}
+},
+
+);
 
 export default withNavigation(RoomHomeScreen);
 

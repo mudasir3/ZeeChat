@@ -4,7 +4,7 @@ import { View, Text, Image, FlatList ,TouchableOpacity,StyleSheet,ActivityIndica
 import {TabView,TabBar} from 'react-native-tab-view';
 
 import firestore from '@react-native-firebase/firestore';
-import {_saveToAsync,_getDataAsync} from "./AsyncStorage"
+import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
 
 
 import { withNavigation } from 'react-navigation';
@@ -69,26 +69,24 @@ class RoomHomeScreen extends Component {
     return(
       <TouchableOpacity 
        onPress={() => this.props.navigation.navigate('ChatScreen')}
-      style={{borderRadius:15,flexDirection:'row',backgroundColor:'#ffffff',height: 80,marginVertical:10}}
+      style={styles.listItemContainer}
       >
-        <Image style={{width: 80,height: 80,borderRadius:10}}
-          source={require("../assets/avatar.png")}
+        <Image style={styles.listItemImg}
+          source={require("../../assets/avatar.png")}
           />
 
         <View>
           <View style ={{flexDirection:'row'}}>
 
-            <Text style={{marginLeft:10, textAlign:'center',color:"#000000",marginTop:5,fontWeight:'bold'}}>
+            <Text style={styles.textBold}>
               {item.name}
             </Text>
           </View>
 
           <View style ={{flexDirection:'row'}}>
-
-          
           </View>
 
-          <Text style={{textAlign:'center',color:"#000000",marginTop:5 ,marginLeft:10 }}>
+          <Text style={styles.listItemText}>
             {item.msg}
           </Text>
         </View>
@@ -101,36 +99,32 @@ class RoomHomeScreen extends Component {
   render() {
    
     return (
-      <View style={{flex:1,backgroundColor:'#FCF3F4'}} >
-
-        <View style={{ backgroundColor:"#D82020",padding:8,flexDirection:'row',alignSelf:'stretch'}}>
+      <View style={styles.container} >
+        <View style={styles.topContainer}>
             <TouchableOpacity
               style={{alignSelf:'flex-start',flex: 1,}}
               onPress={()=> this.props.navigation.openDrawer()}>
-              <Image style={{marginTop: 5, marginLeft: 5,width: 40,height: 40,borderRadius: 20}}
-                          source={require("../assets/avatar.png")}
+              <Image style={styles.topimg}
+                          source={require("../../assets/avatar.png")}
                           />
             </TouchableOpacity>
 
-            <Text style={{ backgroundColor:"#D82020",
-          color:'#ffffff',fontSize:20}}>Messages</Text>
+            <Text style={styles.text}>Messages</Text>
 
               <TouchableOpacity
-                //onPress={()=>this.addFriend(this.state.selectedmember)} 
                 style={{alignSelf:'flex-end',flex: 1}}>
-                  <Image style={{width: 40,height: 40,resizeMode:'contain',alignSelf:'flex-end'
-                  }}
-                    source={require("../assets/addfriend.png")}
+                  <Image style={styles.img}
+                    source={require("../../assets/addfriend.png")}
                     />
                 </TouchableOpacity>
 
         </View>
 
 
-      <View style={{flex:1,marginHorizontal:10,marginTop:10}} >
+      <View style={styles.flatlistContainer} >
 
         <FlatList
-          style={{borderRadius: 20,margin:5}}
+          style={styles.flatlist}
             data={this.state.FriendsList}
             renderItem={({ item, index }) => 
               this.createFriendsList(item, index)
@@ -138,8 +132,6 @@ class RoomHomeScreen extends Component {
             keyExtractor={(item) => item.id
             }
             />
-
-
      </View>
       </View>
     );
@@ -147,7 +139,68 @@ class RoomHomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabStyle: {},
+  container:{
+    flex:1,
+    backgroundColor:'#FCF3F4'
+  },
+  flatlist:{
+    borderRadius: 20,
+    margin:5
+  },
+  flatlistContainer:{
+    flex:1,
+    marginHorizontal:10,
+    marginTop:10
+  },
+  topContainer:{
+    backgroundColor:"#D82020",
+    padding:8,
+    flexDirection:'row',
+    alignSelf:'stretch'
+  },
+  listItemContainer:{
+    borderRadius:15,
+    flexDirection:'row',
+    backgroundColor:'#ffffff',
+    height: 80,
+    marginVertical:10
+  },
+  listItemImg:{
+    width: 80,
+    height: 80,
+    borderRadius:10
+  },
+  img:{
+    width: 40,
+    height: 40,
+    resizeMode:'contain',
+    alignSelf:'flex-end'
+  },
+  topimg:{
+    marginTop: 5, 
+    marginLeft: 5,
+    width: 40,
+    height: 40,
+    borderRadius: 20
+  },
+  textBold:{
+    marginLeft:10, 
+    textAlign:'center',
+    color:"#000000",
+    marginTop:5,
+    fontWeight:'bold'
+  },
+  listItemText:{
+    textAlign:'center',
+    color:"#000000",
+    marginTop:5 ,
+    marginLeft:10 
+  },
+  text:{
+    backgroundColor:"#D82020",
+    color:'#ffffff',
+    fontSize:20
+  },
  scrollStyle: {
    backgroundColor: 'white',
    paddingLeft: 65,

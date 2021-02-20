@@ -4,22 +4,19 @@ import { createAppContainer,createSwitchNavigator} from 'react-navigation';
 import { createStackNavigator, } from 'react-navigation-stack';
 import { createDrawerNavigator, } from 'react-navigation-drawer';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import LoginScreen from "./src/login";
-import ChatRoomScreen from "./src/ChatRoom";
-import Room from "./src/Room";
-import RoomHomeScreen from "./src/RoomHome";
+import LoginScreen from "./src/Auth/login";
+import ChatRoomScreen from "./src/Room/ChatRoom";
+import RoomHomeScreen from "./src/HomeScreen/RoomHome";
 
-import Moment from "./src/Moment";
-import Messages from "./src/messages";
-import Chat from "./src/chat";
+import Moment from "./src/HomeScreen/Moment";
 
-import PhoneAuthScreen from "./src/PhoneAuth";
-import VerifyPhoneScreen from "./src/verifyCode";
+import PhoneAuthScreen from "./src/Auth/PhoneAuth";
+import VerifyPhoneScreen from "./src/Auth/verifyCode";
 
-import SideMenu from './src/sideMenu';
-import createNewRoomScreen from './src/createNewRoom';
-import messages from './src/messages';
-import chat from './src/chat';
+import SideMenu from './src/components/sideMenu';
+import createNewRoomScreen from './src/Room/createNewRoom';
+import messages from './src/HomeScreen/messages';
+import chat from './src/HomeScreen/chat';
 
 import FlashMessage from "react-native-flash-message";
 
@@ -134,7 +131,7 @@ const RootContainer =  createAppContainer(createSwitchNavigator(
     verifyPhone :VerifyPhoneScreen,
   },
   {
-    initialRouteName: 'login',
+    initialRouteName: 'Home',
   }
 ));
 

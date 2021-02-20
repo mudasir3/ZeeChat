@@ -4,7 +4,7 @@ import { View, Text, Image, FlatList ,TouchableOpacity,StyleSheet,KeyboardAvoidi
 import {TabView,TabBar} from 'react-native-tab-view';
 
 import firestore from '@react-native-firebase/firestore';
-import {_saveToAsync,_getDataAsync} from "./AsyncStorage"
+import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
 
 
 import { withNavigation } from 'react-navigation';
@@ -99,7 +99,7 @@ class RoomHomeScreen extends Component {
               flexDirection:'row'
           }}>
               <Image style={{width: 60,height: 60,borderRadius:10}}
-              source={require("../assets/avatar.png")}
+              source={require("../../assets/avatar.png")}
             />
             <Text style={{marginLeft: 10,textAlign:'center',alignSelf:'center' }}>{item.msg}</Text>
           </View>
@@ -123,7 +123,7 @@ class RoomHomeScreen extends Component {
             <Text style={{marginLeft: 10,textAlign:'center',alignSelf:'center' }}>{item.msg}</Text>
 
             <Image style={{width: 60,height: 60,borderRadius:10,marginLeft:10}}
-            source={require("../assets/avatar.png")}
+            source={require("../../assets/avatar.png")}
           />
         </View>
       </View>
@@ -160,7 +160,7 @@ onChangeText = (val) =>{
             <TouchableOpacity
               onPress={()=> this.props.navigation.goBack(null)}>
               <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,borderRadius: 20}}
-                          source={require("../assets/back.png")}
+                          source={require("../../assets/back.png")}
                           />
             </TouchableOpacity>
 

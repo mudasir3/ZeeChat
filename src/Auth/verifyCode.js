@@ -5,13 +5,13 @@ import { StyleSheet,
 TextInput,TouchableOpacity,
 ActivityIndicator,Keyboard} from 'react-native';
 
-import firebase from './FirebaseConfig';
+import firebase from '../components/FirebaseConfig';
 
 import auth from '@react-native-firebase/auth';
 
-import {_saveToAsync} from "./AsyncStorage"
+import {_saveToAsync} from "../components/AsyncStorage"
 import firestore from '@react-native-firebase/firestore';
-import {authenticateUser} from './api/ApiEndPoints'
+import {authenticateUser} from '../api/ApiEndPoints'
 
 var _this;
 export default class VerifyPhoneScreen extends Component {
@@ -135,25 +135,24 @@ render()
   
     return (
 
-<View style={{ flex:1,backgroundColor:'#FCF4F4'}}>
+<View style={styles.container}>
+    <View style={styles.topView}>
+    </View>
 
-<View style={{alignItems:'center',marginTop:30}}>
-</View>
+<View style={styles.topContainer}>
 
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.1,alignItems:'center',marginTop:100}}>
-
-<Image style={{marginTop: 5, marginLeft: 5,width: 180,height: 180,borderRadius: 90}}
-            source={require("../assets/login.png")}
+<Image style={styles.img}
+            source={require("../../assets/login.png")}
             />
 
 </View>
 
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.8}}>
+<View style={styles.middleContainer}>
   <View style={styles.homeContainer}>
 
-    <Text style={{marginTop:60,marginBottom:20,color:'#949494',fontSize:16}}>Enter the verification code</Text>
+    <Text style={styles.text}>Enter the verification code</Text>
 
-        <View style={{ flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+        <View style={styles.textInputContainer}>
 
         <TextInput
           style={styles.codeInput}
@@ -229,16 +228,15 @@ render()
 
 
 
-<View style={{ alignContent:'center',justifyContent:'center',flex:0.1,marginBottom:20}}>
+    <View style={styles.bottomContainer}>
 
-<TouchableOpacity
-        //onPress={() => this.props.navigation.navigate('Home')}
-        onPress={() => this.confirmCode()}
-        style={styles.btnpink}>
-      <Text style={{textAlign:'center',color:'#ffffff',fontSize:16}}>Confirm Code</Text>
+        <TouchableOpacity
+                onPress={() => this.confirmCode()}
+                style={styles.btnpink}>
+              <Text style={{textAlign:'center',color:'#ffffff',fontSize:16}}>Confirm Code</Text>
 
-    </TouchableOpacity>
-</View>
+            </TouchableOpacity>
+    </View>
 
 </View>
     );
@@ -247,9 +245,12 @@ render()
   
   const styles = StyleSheet.create({
     container: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flex:1,
+      backgroundColor:'#FCF4F4'
+    },
+    topView:{
+      alignItems:'center',
+      marginTop:30
     },
       homeContainer: {
         alignItems: 'center',
@@ -257,6 +258,42 @@ render()
         margin: 10,
         marginTop: 20,
         justifyContent: 'center',
+    },
+    topContainer :{
+      alignContent:'center',
+      justifyContent:'center',
+      flex:0.1,
+      alignItems:'center',
+      marginTop:100
+    },
+    middleContainer :{
+      alignContent:'center',
+      justifyContent:'center',
+      flex:0.8
+    },
+    textInputContainer :{
+      flexDirection: 'row',
+       alignContent: 'center',
+        justifyContent: 'center'
+    },
+    bottomContainer :{
+      alignContent:'center',
+      justifyContent:'center',
+      flex:0.1,
+      marginBottom:20
+    },
+    img:{
+      marginTop: 5,
+       marginLeft: 5,
+       width: 180,
+       height: 180,
+       borderRadius: 90
+    },
+    text:{
+      marginTop:60,
+      marginBottom:20,
+      color:'#949494',
+      fontSize:16
     },
     btnwhite: {
         fontSize: 16,
