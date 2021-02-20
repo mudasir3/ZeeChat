@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
-import { StyleSheet,
- Text,
- View,Image ,
-TextInput,TouchableOpacity,
-ActivityIndicator,Keyboard} from 'react-native';
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
+} from 'react-native';
 
 import firebase from '../components/FirebaseConfig';
 
@@ -15,124 +20,115 @@ import {authenticateUser} from '../api/ApiEndPoints'
 
 var _this;
 export default class VerifyPhoneScreen extends Component {
+  constructor(props) {
+    super(props);
+    _this = this;
+  }
 
-    constructor(props) {
-      super(props);
-      _this=this;
-    }
+  state = {
+    number: '',
+    code: '',
+    setVerificationId: '',
+    recaptchaVerifier: '',
+    confirm: null,
+    codeInput: '',
+    text1: '',
+    text2: '',
+    text3: '',
+    text4: '',
+    text5: '',
+    text6: '',
+    visible: false,
+  };
 
-    state={
-        number :'',
-        code:'',
-        setVerificationId:'',
-        recaptchaVerifier:'',
-        confirm: null,
-          codeInput: '',
-          text1: '',
-          text2: '',
-          text3: '',
-          text4: '',
-          text5: '',
-          text6: '', 
-          visible: false
- 
-    }
+  componentDidMount() {
+    this.confirm = this.props.navigation.getParam('data');
 
-    componentDidMount()
-    {
-        this.confirm = this.props.navigation.getParam('data')
+    console.log(' dataa ' + JSON.stringify(this.confirm));
+  }
 
-        console.log( " dataa " + JSON.stringify(this.confirm))
-
-
-    }
-
-  confirmCode = () =>{
+  confirmCode = () => {
     try {
-      var { codeInput } = this.state;
-      codeInput = this.state.text1 + this.state.text2 + this.state.text3 + this.state.text4 + this.state.text5 + this.state.text6
+      var {codeInput} = this.state;
+      codeInput =
+        this.state.text1 +
+        this.state.text2 +
+        this.state.text3 +
+        this.state.text4 +
+        this.state.text5 +
+        this.state.text6;
 
-      this.setState({visible:true})
-      Keyboard.dismiss()
+      this.setState({visible: true});
+      Keyboard.dismiss();
 
-        this.confirm.confirm(codeInput).
-      then(res => {    
-         
-               var data =this.props.navigation.getParam('data')
+      this.confirm
+        .confirm(codeInput)
+        .then((res) => {
+          var data = this.props.navigation.getParam('data');
 
-              var phoneNumber = data._auth._user.phoneNumber
-              const params = {phoneNumber};
+          var phoneNumber = data._auth._user.phoneNumber;
+          const params = {phoneNumber};
 
-              authenticateUser(params)
-                .then(async res =>{
-                console.log( "reponse " + JSON.stringify(res))
-                
-                this.setState({visible:false})
+          authenticateUser(params).then(async (res) => {
+            console.log('reponse ' + JSON.stringify(res));
 
-                _saveToAsync('userid',res.data.user_id )
-                _saveToAsync('username',res.data.user_id)
-                _saveToAsync('token',res.data.token)
-                
-                _saveToAsync('image',res.data.image)
+            this.setState({visible: false});
 
-                this.props.navigation.navigate('Home')
-              });
+            _saveToAsync('userid', res.data.user_id);
+            _saveToAsync('username', res.data.user_id);
+            _saveToAsync('token', res.data.token);
 
-        
+            _saveToAsync('image', res.data.image);
 
-      })
-      .catch(err =>{       
-        
-        console.log( " verify errorr " + JSON.stringify(err))
+            this.props.navigation.navigate('Home');
+          });
+        })
+        .catch((err) => {
+          console.log(' verify errorr ' + JSON.stringify(err));
 
-        //alert(" error " + err + " " + JSON.stringify(err))
-        this.setState({visible:false})
+          //alert(" error " + err + " " + JSON.stringify(err))
+          this.setState({visible: false});
 
-        if(JSON.stringify(err).includes("the sms code has expired firebase"))
-        {
-          this.props.navigation.navigate('Home')
-        }
-        else{
-          this.props.navigation.navigate('Home')
-        }
-
-      })
-
+          if (
+            JSON.stringify(err).includes('the sms code has expired firebase')
+          ) {
+            this.props.navigation.navigate('Home');
+          } else {
+            this.props.navigation.navigate('Home');
+          }
+        });
     } catch (error) {
       console.log('Invalid code.' + error);
 
-      alert('invalid code')
+      alert('invalid code');
     }
-  }
+  };
 
-  
   onchangeText(value1) {
-    this.setState({ text1: value1 })
+    this.setState({text1: value1});
     this.secondTextInput.focus();
   }
   onchangeText2(value2) {
-    this.setState({ text2: value2 })
+    this.setState({text2: value2});
     this.thirdTextInput.focus();
   }
   onchangeText3(value3) {
-    this.setState({ text3: value3 })
+    this.setState({text3: value3});
     this.fourthTextInput.focus();
   }
   onchangeText4(value4) {
-    this.setState({ text4: value4 })
+    this.setState({text4: value4});
     this.fifthTextInput.focus();
   }
   onchangeText5(value5) {
-    this.setState({ text5: value5 })
+    this.setState({text5: value5});
     this.sixthTextInput.focus();
   }
   onchangeText6(value6) {
-    this.setState({ text6: value6 })
+    this.setState({text6: value6});
   }
 
-render()
-    {
-  
+  render() {
     return (
 
 <View style={styles.container}>
@@ -238,7 +234,23 @@ render()
             </TouchableOpacity>
     </View>
 
-</View>
+        <View
+          style={{
+            alignContent: 'center',
+            justifyContent: 'center',
+            flex: 0.1,
+            marginBottom: 20,
+          }}>
+          <TouchableOpacity
+            //onPress={() => this.props.navigation.navigate('Home')}
+            onPress={() => this.confirmCode()}
+            style={styles.btnpink}>
+            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 16}}>
+              Confirm Code
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
@@ -324,25 +336,59 @@ render()
       borderRadius: 30,
       textTransform: 'uppercase',
   },
-  
-    codeInput: {
-      alignSelf: 'stretch',
-      justifyContent: 'center',
-      textAlign: 'center',
-      alignContent: 'center',
-      fontSize: 20,
-      padding: 10,
-      paddingTop: 15,
-      paddingBottom: 15,
-      borderBottomColor: '#b9b9b9',
-      borderBottomWidth: 2,
-      marginTop: 5,
-      marginRight: 5,
-      marginBottom: 5,
-      marginLeft: 5,
-      backgroundColor: '#fff',
-      flex: 1,
+  homeContainer: {
+    alignItems: 'center',
+    padding: 10,
+    margin: 10,
+    marginTop: 20,
+    justifyContent: 'center',
   },
-  });
+  btnwhite: {
+    fontSize: 16,
+    width: 150,
+    borderWidth: 0.5,
+    textAlign: 'left',
+    backgroundColor: '#ffffff',
+    paddingTop: 15,
+    paddingBottom: 15,
+    padding: 17,
+    color: '#e15d86',
+    borderColor: '#000000',
+    borderRadius: 15,
+    margin: 15,
+    textTransform: 'uppercase',
+  },
+  btnpink: {
+    fontSize: 16,
+    borderWidth: 0.5,
+    textAlign: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: '#E20030',
+    paddingVertical: 18,
+    marginHorizontal: 30,
+    color: '#e15d86',
+    borderColor: '#000000',
+    borderRadius: 30,
+    textTransform: 'uppercase',
+  },
 
-
+  codeInput: {
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignContent: 'center',
+    fontSize: 20,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderBottomColor: '#b9b9b9',
+    borderBottomWidth: 2,
+    marginTop: 5,
+    marginRight: 5,
+    marginBottom: 5,
+    marginLeft: 5,
+    backgroundColor: '#fff',
+    flex: 1,
+  },
+});

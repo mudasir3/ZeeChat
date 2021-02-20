@@ -18,137 +18,150 @@ import createNewRoomScreen from './src/Room/createNewRoom';
 import messages from './src/HomeScreen/messages';
 import chat from './src/HomeScreen/chat';
 
-import FlashMessage from "react-native-flash-message";
+import FlashMessage from 'react-native-flash-message';
 
 const MessageNavigator = createStackNavigator({
   MessageScreen: {
     screen: messages,
     navigationOptions: {
       header: null,
-  }
+    },
   },
   ChatScreen: {
     screen: chat,
     navigationOptions: {
       header: null,
-  }
-  }
-})
+    },
+  },
+});
 
 const RoomTabNavigator = createBottomTabNavigator(
   {
-  Room: {
-    screen: RoomHomeScreen,
-    navigationOptions: {
-      tabBarIcon: ({tintColor}) => (
-                        <View style={{flexDirection: 'column', 
-        width:'100%', height: '100%', alignItems: 'center', justifyContent:'center',
-        backgroundColor: tintColor}}>
-        <Text style={{fontSize: 12, color: 'black'}}>Room</Text>
-        </View>
-
-      ),
+    Room: {
+      screen: RoomHomeScreen,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <View
+            style={{
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: tintColor,
+            }}>
+            <Text style={{fontSize: 12, color: 'black'}}>Room</Text>
+          </View>
+        ),
+      },
     },
-  },
-  Moment: {
-    screen: Moment,
-    navigationOptions: {
-      header : null,
-      tabBarIcon: ({tintColor}) => (
-                        <View style={{flexDirection: 'column', 
-        width:'100%', height: '100%', alignItems: 'center', justifyContent:'center',
-        backgroundColor: tintColor}}>
-        <Text style={{fontSize: 12, color: 'black'}}>Moment</Text>
-        </View>
-
-      ),
+    Moment: {
+      screen: Moment,
+      navigationOptions: {
+        header: null,
+        tabBarIcon: ({tintColor}) => (
+          <View
+            style={{
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: tintColor,
+            }}>
+            <Text style={{fontSize: 12, color: 'black'}}>Moment</Text>
+          </View>
+        ),
+      },
     },
-  },
-  Messages: {
-    screen: MessageNavigator,
-    navigationOptions: {
-      header : null,
-      tabBarIcon: ({tintColor}) => (
-                        <View style={{flexDirection: 'column', 
-        width:'100%', height: '100%', alignItems: 'center', justifyContent:'center',
-        backgroundColor: tintColor}}>
-        <Text style={{fontSize: 12, color: 'black'}}>Messages</Text>
-        </View>
-
-      ),
+    Messages: {
+      screen: MessageNavigator,
+      navigationOptions: {
+        header: null,
+        tabBarIcon: ({tintColor}) => (
+          <View
+            style={{
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: tintColor,
+            }}>
+            <Text style={{fontSize: 12, color: 'black'}}>Messages</Text>
+          </View>
+        ),
+      },
     },
-  },
   },
   {
-    initialRouteName: "Room",
-  tabBarOptions: {
-    activeTintColor: '#D82020',
-    inactiveTintColor: 'white',
-    showIcon: true,
-    showLabel: false,
-    style: {
-      backgroundColor: 'white',
-      height: 50
+    initialRouteName: 'Room',
+    tabBarOptions: {
+      activeTintColor: '#D82020',
+      inactiveTintColor: 'white',
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: 'white',
+        height: 50,
+      },
     },
   },
-  },
 );
-
 
 const RoomDashboard = createDrawerNavigator(
   {
     Room: {
-       screen: RoomTabNavigator ,
-       navigationOptions: {
-       title: "Change Pin Code",
-      headerStyle: {
-        height: 200,
-      }
-    }
-    }, 
-    createNewRoom:{
-      screen:createNewRoomScreen
+      screen: RoomTabNavigator,
+      navigationOptions: {
+        title: 'Change Pin Code',
+        headerStyle: {
+          height: 200,
+        },
+      },
     },
-    RoomScrn :{
-      screen:ChatRoomScreen
-    }
-
+    createNewRoom: {
+      screen: createNewRoomScreen,
+    },
+    RoomScrn: {
+      screen: ChatRoomScreen,
+    },
   },
   {
-  contentComponent: SideMenu,
-  drawerWidth: 300,
-  drawerPosition: "left",
-  activeTintColor: 'white',
-  inactiveTintColor: 'white'
-}
+    contentComponent: SideMenu,
+    drawerWidth: 300,
+    drawerPosition: 'left',
+    activeTintColor: 'white',
+    inactiveTintColor: 'white',
+  },
 );
 
-const RootContainer =  createAppContainer(createSwitchNavigator(
-  {
-    login:LoginScreen,
-    Home: RoomDashboard,
-    phoneauth :PhoneAuthScreen,
-    verifyPhone :VerifyPhoneScreen,
-  },
-  {
-    initialRouteName: 'Home',
-  }
-));
-
+const RootContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      login: LoginScreen,
+      Home: RoomDashboard,
+      phoneauth: PhoneAuthScreen,
+      verifyPhone: VerifyPhoneScreen,
+    },
+    {
+      initialRouteName: 'login',
+    },
+  ),
+);
 
 export default class App extends React.Component {
-  render() { 
-   return <View style={{flex:1}}>
-      <RootContainer>
-      ref={navigatorRef => {
-        NavigationService.setTopLevelNavigator(navigatorRef);
-      }}
-      </RootContainer>  
-      <FlashMessage position="top" />
- 
-    </View>  
-       
-  
-}
-
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <RootContainer>
+          ref=
+          {(navigatorRef) => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        </RootContainer>
+        <FlashMessage position="top" />
+      </View>
+    );
+  }
 }

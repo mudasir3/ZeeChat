@@ -1,5 +1,14 @@
-import React, { Component } from 'react';
-import { View, Text, Image, TextInput,StyleSheet ,TouchableOpacity,ActivityIndicator,Alert} from 'react-native';
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
@@ -11,138 +20,124 @@ import * as Permissions from "expo-permissions";
 import FormData from "form-data"
 var _this;
 
-
-export default class createNewRoomScreen extends Component {    
-
+export default class createNewRoomScreen extends Component {
   constructor(props) {
     super(props);
-    _this=this;
+    _this = this;
     //this.myBroadcasterRef = React.createRef();
   }
 
   state = {
     selected: 'all',
-    anouncement:'Welcome everyone,lets chat and have fun together ',
-    name:'',
+    anouncement: 'Welcome everyone,lets chat and have fun together ',
+    name: '',
     visible: false,
-    userid:'',
-    token:'',
-    uri:''
-
+    userid: '',
+    token: '',
+    uri: '',
   };
 
-  componentDidMount(){
-    this.getdata()
-
+  componentDidMount() {
+    this.getdata();
   }
-  getdata =async() => {
-    await _getDataAsync('userid', (response => {
+  getdata = async () => {
+    await _getDataAsync('userid', (response) => {
       //let object = JSON.parse(response);
       console.log('user : ', response);
-    
-      this.setState({userid:response})
-  }));
 
-
-  await _getDataAsync('token', (response => {
-
-    console.log('TOKENNNNN : ', response);
-
-    this.setState({token:response})
-    }));
-}
-
-onChangeImageClicked = () => {
-  console.log("onChangeImageClicked");
-
-  Alert.alert(
-    "Image Source",
-    "Select Image From",
-    [
-      { text: "Camera", onPress: () => this.pickImage("camera") },
-      { text: "Gallery", onPress: () => this.pickImage("gallary") }
-    ],
-    { cancelable: true }
-  );
-};
-
-pickImage = async driver => {
-  const { status } = await Permissions.askAsync(
-    Permissions.CAMERA,
-    Permissions.CAMERA_ROLL
-  );
-
-  if (status === "granted") {
-    let src = ImagePicker.launchImageLibraryAsync;
-
-    if (driver == "camera") {
-      src = ImagePicker.launchCameraAsync;
-    }
-
-    let result = await src({ 
-      aspect: [4, 3],
-      base64: true,
-      quality: 0.5
+      this.setState({userid: response});
     });
 
-    if (!result.cancelled) {
-      //this.selectedAvatar = result.base64.replace(/\s/g, "");
-      
-      const selecteduri = { uri: result.uri };
-      this.setState({ uri: selecteduri });
+    await _getDataAsync('token', (response) => {
+      console.log('TOKENNNNN : ', response);
+
+      this.setState({token: response});
+    });
+  };
+
+  onChangeImageClicked = () => {
+    console.log('onChangeImageClicked');
+
+    Alert.alert(
+      'Image Source',
+      'Select Image From',
+      [
+        {text: 'Camera', onPress: () => this.pickImage('camera')},
+        {text: 'Gallery', onPress: () => this.pickImage('gallary')},
+      ],
+      {cancelable: true},
+    );
+  };
+
+  pickImage = async (driver) => {
+    const {status} = await Permissions.askAsync(
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL,
+    );
+
+    if (status === 'granted') {
+      let src = ImagePicker.launchImageLibraryAsync;
+
+      if (driver == 'camera') {
+        src = ImagePicker.launchCameraAsync;
+      }
+
+      let result = await src({
+        aspect: [4, 3],
+        base64: true,
+        quality: 0.5,
+      });
+
+      if (!result.cancelled) {
+        //this.selectedAvatar = result.base64.replace(/\s/g, "");
+
+        const selecteduri = {uri: result.uri};
+        this.setState({uri: selecteduri});
+      } else {
+        this.log('result cancelled');
+      }
     } else {
-      this.log("result cancelled");
+      alert('Permission not granted');
+      return false;
     }
-  } else {
-    alert("Permission not granted");
-    return false;
-  }
-};
+  };
 
-  createRoom = async () =>{
+  createRoom = async () => {
+    if (this.state.name != '') {
+      this.setState({visible: true});
+      let token = this.state.token;
 
-    if(this.state.name !='')
-    {
-      
-       this.setState({visible:true})
-      let token = this.state.token
+      let selecteduri = this.state.uri;
 
-      let selecteduri = this.state.uri
+      const formData = new FormData();
+      formData.append('name', this.state.name);
+      formData.append('location', 'lahore pakistan');
+      formData.append('user_id', this.state.userid);
+      formData.append('image', {
+        uri: selecteduri.uri,
+        type: 'image/*',
+        name: this.state.name,
+      });
+      formData.append('announcement', this.state.anouncement);
 
-        const formData = new FormData();
-        formData.append('name', this.state.name);
-        formData.append('location',"lahore pakistan");
-        formData.append('user_id', this.state.userid);
-        formData.append('image', {
-          uri: selecteduri.uri,
-          type: 'image/*',
-          name: this.state.name,
+      createRooms(token, formData)
+        .then((res) => {
+          console.log('responseee : ', JSON.stringify(res));
+          alert('Room created Successfully !');
+          this.setState({visible: false});
+
+          this.props.navigation.goBack(null);
+        })
+        .catch((err) => {
+          console.log('err : ', JSON.stringify(err));
+          alert('Error creating Room, please try again !');
+
+          this.setState({visible: false});
         });
-        formData.append('announcement', this.state.anouncement);
-
-      createRooms(token,formData)
-      .then(res =>{
-        console.log('responseee : ', JSON.stringify(res));
-        alert("Room created Successfully !")
-        this.setState({visible:false})
-
-        this.props.navigation.goBack(null)
-      })
-      .catch(err=>{
-        console.log('err : ',JSON.stringify(err));
-        alert("Error creating Room, please try again !")
-
-        this.setState({visible:false})
-
-      })   
-
+    } else {
+      alert('please enter name');
     }
-    else
-    {
-      alert('please enter name')
-    }
-
-  }
+  };
   render() {
 
     let profileImg = require("../../assets/z.png")
@@ -200,7 +195,6 @@ pickImage = async driver => {
           <Text style={styles.textCreate}> Create for free</Text>
         </TouchableOpacity>
       </View>
-    
     );
   }
 }

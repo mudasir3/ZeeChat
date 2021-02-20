@@ -5,33 +5,31 @@ import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
 import firestore from '@react-native-firebase/firestore';
 
 export default class SideMenu extends Component {
+  state = {
+    username: '',
+    userid: '',
+  };
 
-
-  state={
-    username : '',
-    userid:''
+  componentDidMount() {
+    this.getdata();
   }
 
-  componentDidMount(){
-    this.getdata()  
- }
+  getdata = async () => {
+    await _getDataAsync('username', (response) => {
+      //let object = JSON.parse(response);
+      console.log('usernameeeeee : ', response);
+      this.setState({username: response});
+    });
 
-  getdata =async() => {
-      await _getDataAsync('username', (response => {
-        //let object = JSON.parse(response);
-        console.log('usernameeeeee : ', response);
-        this.setState({username:response})
-    }));
-
-    await _getDataAsync('userid', (response => {
+    await _getDataAsync('userid', (response) => {
       //let object = JSON.parse(response);
       console.log('useridddddd : ', response);
-      this.setState({userid:response})
-  }));
-  }
+      this.setState({userid: response});
+    });
+  };
 
-  changeName =() =>{
-     firestore()
+  changeName = () => {
+    firestore()
       .collection('Users')
       .doc(this.state.userid)
       .update({
@@ -40,9 +38,9 @@ export default class SideMenu extends Component {
       .then(() => {
         console.log('User updated!');
       });
-  }
+  };
 
-  render () {
+  render() {
     return (
       <View style={styles.container}>
             <View style={styles.navSectionStyle}>
@@ -60,8 +58,8 @@ export default class SideMenu extends Component {
                 onChangeText ={(text) =>{ this.setState({username:text})}}
                 onSubmitEditing={()=> {this.changeName() }}>
               {this.state.username}
-              </TextInput>
-            </TouchableOpacity>
+            </TextInput>
+          </TouchableOpacity>
 
             <View style={{alignSelf:'center',flexDirection:'row'}} >
             <Image style={styles.img}
@@ -70,40 +68,20 @@ export default class SideMenu extends Component {
             <Text style={styles.navItemStyle}>300</Text>
           </View>      
 
+          <Text style={styles.navItemStyle}>Tasks</Text>
 
-              <Text style={styles.navItemStyle}>
-              Tasks
-              </Text>
+          <Text style={styles.navItemStyle}>Wallet</Text>
 
-              <Text style={styles.navItemStyle}>
-                Wallet
-              </Text>
+          <Text style={styles.navItemStyle}>Yalla Premium</Text>
 
-              <Text style={styles.navItemStyle} >
-                Yalla Premium
-              </Text>
+          <Text style={styles.navItemStyle}>Store</Text>
 
-              <Text style={styles.navItemStyle} >
-                Store
-              </Text>
+          <Text style={styles.navItemStyle}>Level</Text>
 
-              <Text style={styles.navItemStyle} >
-                Level
-              </Text>
+          <Text style={styles.navItemStyle}>Language</Text>
 
-              <Text style={styles.navItemStyle} >
-                Language
-              </Text>
-
-              <Text style={styles.navItemStyle} >
-                Settings
-              </Text>
-
-              </View>
-          
-
-
-
+          <Text style={styles.navItemStyle}>Settings</Text>
+        </View>
       </View>
     );
   }

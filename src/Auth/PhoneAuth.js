@@ -8,104 +8,98 @@ ActivityIndicator,Keyboard} from 'react-native';
 import firebase from '../components/FirebaseConfig';
 
 import auth from '@react-native-firebase/auth';
-import { ThemeContext } from 'react-navigation';
 
 import {authenticateUser} from '../api/ApiEndPoints'
 import {_saveToAsync} from "../components/AsyncStorage"
 
 export default class PhoneAuthScreen extends Component {
-
-    constructor(props) {
-      super(props);
-      _this=this;
-    }
-
-    state={
-        number :'',
-        code:'',
-        setVerificationId:'',
-        recaptchaVerifier:'',
-        confirm: null,
-        visible: false,
-        visibletxt :true
-    }
-
-    componentDidMount(){
-          this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow );
-          this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide);
-    }
-    componentWillUnmount(){
-      this.keyboardDidShowListener.remove();
-      this.keyboardDidHideListener.remove();
-    }
-    _keyboardDidShow(e) {
-        _this.setState({
-          visibletxt:false
-      })
-    }
-  
-  _keyboardDidHide(e) {  
-    _this.setState({
-      visibletxt:true
-    })
+  constructor(props) {
+    super(props);
+    _this = this;
   }
 
-  signInWithPhoneNumber = async(number) =>{
-    console.log( " signInWithPhoneNumber" )
+  state = {
+    number: '',
+    code: '',
+    setVerificationId: '',
+    recaptchaVerifier: '',
+    confirm: null,
+    visible: false,
+    visibletxt: true,
+  };
 
-     this.setState({visible:true})
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow,
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide,
+    );
+  }
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+  _keyboardDidShow(e) {
+    _this.setState({
+      visibletxt: false,
+    });
+  }
 
-     Keyboard.dismiss()
+  _keyboardDidHide(e) {
+    _this.setState({
+      visibletxt: true,
+    });
+  }
 
-      var phoneNumber = number
-          const params = {phoneNumber};
-   
+  signInWithPhoneNumber = async (number) => {
+    console.log(' signInWithPhoneNumber');
+
+    this.setState({visible: true});
+
+    Keyboard.dismiss();
+
+    var phoneNumber = number;
+    const params = {phoneNumber};
 
     authenticateUser(params)
-    .then(async res =>{
-      console.log( "reponse " + JSON.stringify(res))
-      if(res.data.message)
-      {
-          this.confirmation = await auth().signInWithPhoneNumber(phoneNumber)
-            .then(res =>{
-              console.log(" response " + res + "  " + JSON.stringify(res))
-              this.setState({visible:false})
+      .then(async (res) => {
+        console.log('reponse ' + JSON.stringify(res));
+        if (res.data.message) {
+          this.confirmation = await auth()
+            .signInWithPhoneNumber(phoneNumber)
+            .then((res) => {
+              console.log(' response ' + res + '  ' + JSON.stringify(res));
+              this.setState({visible: false});
 
-              this.props.navigation.navigate('verifyPhone',{'data' : res})
+              this.props.navigation.navigate('verifyPhone', {data: res});
             })
-            .catch(err =>{
-              this.setState({visible:false})
-              alert(" Error " + err)
-            })
+            .catch((err) => {
+              this.setState({visible: false});
+              alert(' Error ' + err);
+            });
+        } else {
+          this.setState({visible: false});
 
-      }
-      else
-      {
-        this.setState({visible:false})
+          console.log('iddddddddddddddddddddddddd ' + res.data.id);
+          _saveToAsync('userid', res.data.user_id);
+          _saveToAsync('username', res.data.user_id);
+          _saveToAsync('token', res.data.token);
+          _saveToAsync('image', res.data.image);
 
-        console.log("iddddddddddddddddddddddddd " + res.data.id )
-        _saveToAsync('userid',res.data.user_id)
-        _saveToAsync('username',res.data.user_id)
-        _saveToAsync('token',res.data.token )
-        _saveToAsync('image',res.data.image)
+          this.props.navigation.navigate('Home');
+        }
+      })
+      .catch((err) => {
+        console.log('error ' + JSON.stringify(err));
 
-        this.props.navigation.navigate('Home')
+        alert(' error ' + JSON.stringify(err) + '  err ' + err);
+      });
+  };
 
-      }
-    })
-    .catch(err=>{
-      console.log( "error " + JSON.stringify(err))
-
-      alert(" error " +  JSON.stringify(err)  + "  err " +err) 
-    })
-
-
-  }
-
-render()
-    {
-    
-  
+  render() {
     return (
     
 
@@ -144,6 +138,8 @@ render()
        </View>
 
       <View style={styles.bottomContainer}>
+
+
         <TouchableOpacity
                 onPress={() => this.signInWithPhoneNumber(this.state.number)}
                 style={styles.btnpink}>
@@ -151,7 +147,8 @@ render()
 
         </TouchableOpacity>
       </View>
-</View>
+
+      </View>
     );
   }
 }

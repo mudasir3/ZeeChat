@@ -1,83 +1,79 @@
-import React, { Component } from 'react';
-import { View, Text, Image, FlatList ,TouchableOpacity,StyleSheet,ActivityIndicator} from 'react-native';
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 
-import {TabView,TabBar} from 'react-native-tab-view';
+import {TabView, TabBar} from 'react-native-tab-view';
 
 import firestore from '@react-native-firebase/firestore';
+
 import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
 
+import {withNavigation} from 'react-navigation';
 
-import { withNavigation } from 'react-navigation';
-
-class RoomHomeScreen extends Component {    
-
-
-
+class RoomHomeScreen extends Component {
   state = {
-    FriendsList :[{
-      "name":"Static User",
-      "msg" : "Hello Friend"
-    },
+    FriendsList: [
+      {
+        name: 'Static User',
+        msg: 'Hello Friend',
+      },
     ],
     visible: false,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     // const { navigation } = this.props;
-
     // this.focusListener = navigation.addListener('didFocus', () => {
-
     // })
-
   }
 
-
-  getRoomData =async() => {
-
+  getRoomData = async () => {
     this.setState({
-      RoomList:[],
-      visible:true
-    })
-
-     firestore()
-  .collection('Rooms')
-  .get()
-  .then(querySnapshot => {
-    console.log('Total users: ', querySnapshot.size);
-
-    querySnapshot.forEach(documentSnapshot => {
-
-      var obj ={"anouncement" :documentSnapshot.data().anouncement,
-    "name" :documentSnapshot.data().name,
-    "id":documentSnapshot.id}
-
-      this.setState({
-        visible:false,
-        RoomList:[...this.state.RoomList,obj]
-      })
+      RoomList: [],
+      visible: true,
     });
 
+    firestore()
+      .collection('Rooms')
+      .get()
+      .then((querySnapshot) => {
+        console.log('Total users: ', querySnapshot.size);
 
-  });
+        querySnapshot.forEach((documentSnapshot) => {
+          var obj = {
+            anouncement: documentSnapshot.data().anouncement,
+            name: documentSnapshot.data().name,
+            id: documentSnapshot.id,
+          };
 
+          this.setState({
+            visible: false,
+            RoomList: [...this.state.RoomList, obj],
+          });
+        });
+      });
+  };
 
-  }
-
-
-
-  createFriendsList = (item, index) =>{
-    return(
-      <TouchableOpacity 
-       onPress={() => this.props.navigation.navigate('ChatScreen')}
-      style={styles.listItemContainer}
-      >
-        <Image style={styles.listItemImg}
-          source={require("../../assets/avatar.png")}
-          />
+  createFriendsList = (item, index) => {
+    return (
+      <TouchableOpacity
+        onPress={() => this.props.navigation.navigate('ChatScreen')}
+        style={styles.listItemContainer}
+       >
+        <Image
+          style={{width: 80, height: 80, borderRadius: 10}}
+          source={require('../../assets/avatar.png')}
+        />
 
         <View>
-          <View style ={{flexDirection:'row'}}>
-
+          <View style={{flexDirection: 'row'}}>
             <Text style={styles.textBold}>
               {item.name}
             </Text>
@@ -90,14 +86,11 @@ class RoomHomeScreen extends Component {
             {item.msg}
           </Text>
         </View>
-
-    </TouchableOpacity>
-    )
-}
-
+      </TouchableOpacity>
+    );
+  };
 
   render() {
-   
     return (
       <View style={styles.container} >
         <View style={styles.topContainer}>
@@ -233,4 +226,3 @@ tabStyle: {
 });
 
 export default withNavigation(RoomHomeScreen);
-

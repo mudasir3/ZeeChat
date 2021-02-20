@@ -17,173 +17,134 @@ import * as Permissions from "expo-permissions";
 
 
 export default class LoginScreen extends Component {
-
-    constructor(props) {
-      super(props);
-      _this=this;
-
-    }
-    
-
-     _requestPermission = async() => {
-      console.log(" _requestPermission " )
-
-         await Permissions.askAsync(Permissions.CAMERA);
-          // if (status !== 'granted') {
-          //   alert('Hey! You might want to enable notifications for my app, they are good.');
-          // }
-
-          await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-          // if (status !== 'granted') {
-          //   alert('Hey! You might want to enable notifications for my app, they are good.');
-          // }
-        }
-
-
-    pickImage = async () => {
-
-            console.log("image picker" );
-
-      const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
-  
-      if (status === 'granted') {
-
-        
-      let src = ImagePicker.launchImageLibraryAsync;
-      let result = await src({ 
-        aspect: [4, 3],
-        base64: true,
-        quality: 0.5
-      });
-      
-      console.log("image " + JSON.stringify(result)  );
-    
-  } else {
-    return alert("Permission not granted");
+  constructor(props) {
+    super(props);
+    _this = this;
   }
 
+  _requestPermission = async () => {
+    console.log(' _requestPermission ');
+
+    await Permissions.askAsync(Permissions.CAMERA);
+    // if (status !== 'granted') {
+    //   alert('Hey! You might want to enable notifications for my app, they are good.');
+    // }
+
+    await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    // if (status !== 'granted') {
+    //   alert('Hey! You might want to enable notifications for my app, they are good.');
+    // }
+  };
+
+  pickImage = async () => {
+    console.log('image picker');
+
+    const {status} = await Permissions.askAsync(
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL,
+    );
+
+    if (status === 'granted') {
+      let src = ImagePicker.launchImageLibraryAsync;
+      let result = await src({
+        aspect: [4, 3],
+        base64: true,
+        quality: 0.5,
+      });
+
+      console.log('image ' + JSON.stringify(result));
+    } else {
+      return alert('Permission not granted');
     }
+  };
 
-    componentDidMount()
-    {    
-      
-      this._requestPermission()      
+  componentDidMount() {
+    this._requestPermission();
+  }
 
-    }
+  logout = () => {
+    Facebook.logOutAsync();
+  };
 
+  facebookLogin = async () => {
+    try {
+      await Facebook.initializeAsync('2733249120336930', 'ZeeChat')
+        .then(async (response) => {
+          console.log('FB INITIALIZEEE ' + JSON.stringify(response));
 
-    logout = () => {
-      Facebook.logOutAsync()
-    }
+          const {
+            type,
+            token,
+            expires,
+            declinedPermissions,
+          } = await Facebook.logInWithReadPermissionsAsync('2733249120336930', {
+            permissions: ['public_profile'],
+          });
+          console.log('FB RESPONSE ', ' TYPE : ', type, ' token : ', token);
 
-    facebookLogin = async () => {
-  
-      try {
+          if (type == 'success') {
+            console.log('FB Success');
 
-        await Facebook.initializeAsync("2733249120336930","ZeeChat")
-        .then(async response =>{
+            fbgraphapi(token).then(async (res) => {
+              console.log('fb graph  reponse ' + JSON.stringify(res));
 
-          console.log("FB INITIALIZEEE " + JSON.stringify(response))
+              if (res.data) {
+                var name = res.data.name;
+                var phoneNumber = '12345678910';
+                var image = res.data.picture.data.url;
+                var coins = 200;
+                var fb_id = res.data.id;
 
+                const params = {name, phoneNumber, image, coins, fb_id};
 
-        const {
-          type,
-          token,
-          expires,
-          declinedPermissions
-        } = await Facebook.logInWithReadPermissionsAsync(
-          "2733249120336930",
-          {
-            permissions: ['public_profile']
-          }
-        );
-        console.log("FB RESPONSE ", " TYPE : ", type, " token : ", token)
-      
-        if (type == "success") {
-
-          console.log("FB Success")
-
-          fbgraphapi(token)
-          .then(async res =>{
-            console.log( "fb graph  reponse " + JSON.stringify(res))
-
-                if(res.data)
-                {
-                  var name = res.data.name
-                  var phoneNumber = '12345678910'
-                  var image = res.data.picture.data.url
-                  var coins = 200
-                  var fb_id = res.data.id
-
-                 const params = {name,phoneNumber,image,coins,fb_id};
-
-                  socialLogin(params)
-                  .then( res =>{
-
-                    if(res.message)
-                    {
-
+                socialLogin(params)
+                  .then((res) => {
+                    if (res.message) {
                       socialLogin(params)
-                        .then( res =>{
+                        .then((res) => {
+                          _saveToAsync('userid', res.data.user_id);
+                          _saveToAsync('username', res.data.name);
+                          _saveToAsync('image', res.data.image);
 
-                          _saveToAsync('userid',res.data.user_id )
-                          _saveToAsync('username',res.data.name)
-                          _saveToAsync('image',res.data.image)
+                          _saveToAsync('token', res.data.token);
 
-                          _saveToAsync('token',res.data.token)
-                
-                            this.props.navigation.navigate('Home')
-
+                          this.props.navigation.navigate('Home');
                         })
-                        .catch(err=>{
-                           console.log( "socialLogin  errr " + JSON.stringify(err))
-                         })
+                        .catch((err) => {
+                          console.log(
+                            'socialLogin  errr ' + JSON.stringify(err),
+                          );
+                        });
+                    } else {
+                      console.log(
+                        'socialLogin  reponse ' + JSON.stringify(res),
+                      );
 
-                    }
-                    else
-                    {
-                      console.log( "socialLogin  reponse " + JSON.stringify(res))
+                      _saveToAsync('userid', res.data.user_id);
+                      _saveToAsync('username', res.data.name);
+                      _saveToAsync('token', res.data.token);
 
-                      _saveToAsync('userid',res.data.user_id )
-                      _saveToAsync('username',res.data.name )
-                      _saveToAsync('token',res.data.token)
-            
-                        this.props.navigation.navigate('Home')
+                      this.props.navigation.navigate('Home');
                     }
                   })
-                  .catch(err=>{
-                    console.log( "socialLogin  errr " + JSON.stringify(err))
-
-                  })
-
-                  
-                }
+                  .catch((err) => {
+                    console.log('socialLogin  errr ' + JSON.stringify(err));
+                  });
+              }
             });
+          } else {
+            alert(`Facebook Login Not successful: `);
+          }
+        })
+        .catch((err) => {
+          alert('error initializing');
+        });
+    } catch ({message}) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
 
-
-        } else
-        {
-          alert(`Facebook Login Not successful: `)
-
-        }
-
-      }).catch(err=>{
-        alert("error initializing")
-      })
-        
-
-      } catch ({ message }) {
-        alert(`Facebook Login Error: ${message}`);
-      }
-
-      
-
- 
-    };
-
-
-render()
-    {  
+  render() {
     return (
 
 <View style={styles.container}>
