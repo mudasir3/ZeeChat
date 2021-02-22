@@ -19,42 +19,38 @@ import {
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 import firestore from '@react-native-firebase/firestore';
-import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
+import {_saveToAsync, _getDataAsync} from '../components/AsyncStorage';
 
-import { withNavigation } from 'react-navigation';
-import { NavigationEvents } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
+import {NavigationEvents} from 'react-navigation';
 
-import { showMessage, hideMessage } from "react-native-flash-message";
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
-import io from "socket.io-client";
-import SocketProvider from '../components/socket'
+import io from 'socket.io-client';
+import SocketProvider from '../components/socket';
 
-import {getMessages,sendMessage,JoinRoom} from '../api/ApiEndPoints'
-
+import {getMessages, sendMessage, JoinRoom} from '../api/ApiEndPoints';
 
 var position = '';
 
 var _this;
 var socket;
-var theme="require('../../assets/background.jpg')"
+var theme = "require('../../assets/background.jpg')";
 
-  class BackgroundImage extends React.Component {
-
-    render() {
-
-      //let background = require('../../assets/background.jpg')
-      return (
-        <ImageBackground source={this.props.theme}
-          style={{
-            resizeMode: 'cover', flex: 1,
-          }}>
-  
-          {this.props.children}
-  
-        </ImageBackground>
-      )
-    }
-  
+class BackgroundImage extends React.Component {
+  render() {
+    //let background = require('../../assets/background.jpg')
+    return (
+      <ImageBackground
+        source={this.props.theme}
+        style={{
+          resizeMode: 'cover',
+          flex: 1,
+        }}>
+        {this.props.children}
+      </ImageBackground>
+    );
+  }
 }
 
 class ChatRoom extends Component {
@@ -64,13 +60,13 @@ class ChatRoom extends Component {
     _this = this;
   }
 
-  state ={
-    theme:"require('../../assets/background.jpg')",
-    token:'',
-    RoomName :'',
-    Roomid :'',
-    RoomAnouncement : '',
-    isPlaying: false, 
+  state = {
+    theme: "require('../../assets/background.jpg')",
+    token: '',
+    RoomName: '',
+    Roomid: '',
+    RoomAnouncement: '',
+    isPlaying: false,
     isLiveEnded: true,
     msgArray: [],
     msg: '',
@@ -97,58 +93,70 @@ class ChatRoom extends Component {
       {
         userid: 'Mr abc',
       },
-     ],
-     giftslist:[
-       {
-         "src" :require("../../assets/ferrari.png"),
-         "coins":"$300",
-         "name":"ferrari"
-       },
-       {
-        "src" :require("../../assets/football.png"),
-        "coins":"$100",
-        "name":"football"
-      }
-     ],
-     themeList:[
+    ],
+    giftslist: [
       {
-        "src" :require("../../assets/theme1.jpg"),
-      },{
-        "src" :require("../../assets/theme2.jpg"),
+        src: require('../../assets/ferrari.png'),
+        coins: '$300',
+        name: 'ferrari',
       },
       {
-        "src" :require("../../assets/theme3.jpg"),
-      },      {
-        "src" :require("../../assets/theme4.jpg"),
-      },      {
-        "src" :require("../../assets/theme5.jpg"),
-      },      {
-        "src" :require("../../assets/theme6.jpg"),
-      },      {
-        "src" :require("../../assets/theme7.jpg"),
-      },      {
-        "src" :require("../../assets/theme8.jpg"),
-      },      {
-        "src" :require("../../assets/theme9.jpg"),
-      },      {
-        "src" :require("../../assets/theme10.jpg"),
-      },      {
-        "src" :require("../../assets/theme11.jpg"),
-      },      {
-        "src" :require("../../assets/theme12.jpg"),
-      },      {
-        "src" :require("../../assets/theme13.jpg"),
-      },      {
-        "src" :require("../../assets/theme14.jpg"),
-      },      {
-        "src" :require("../../assets/theme15.jpg"),
-      },      {
-        "src" :require("../../assets/theme16.jpg"),
-      }
-    ]
-
-  }
-  
+        src: require('../../assets/football.png'),
+        coins: '$100',
+        name: 'football',
+      },
+    ],
+    themeList: [
+      {
+        src: require('../../assets/theme1.jpg'),
+      },
+      {
+        src: require('../../assets/theme2.jpg'),
+      },
+      {
+        src: require('../../assets/theme3.jpg'),
+      },
+      {
+        src: require('../../assets/theme4.jpg'),
+      },
+      {
+        src: require('../../assets/theme5.jpg'),
+      },
+      {
+        src: require('../../assets/theme6.jpg'),
+      },
+      {
+        src: require('../../assets/theme7.jpg'),
+      },
+      {
+        src: require('../../assets/theme8.jpg'),
+      },
+      {
+        src: require('../../assets/theme9.jpg'),
+      },
+      {
+        src: require('../../assets/theme10.jpg'),
+      },
+      {
+        src: require('../../assets/theme11.jpg'),
+      },
+      {
+        src: require('../../assets/theme12.jpg'),
+      },
+      {
+        src: require('../../assets/theme13.jpg'),
+      },
+      {
+        src: require('../../assets/theme14.jpg'),
+      },
+      {
+        src: require('../../assets/theme15.jpg'),
+      },
+      {
+        src: require('../../assets/theme16.jpg'),
+      },
+    ],
+  };
 
   componentDidMount() {
     const {navigation} = this.props;
@@ -224,16 +232,11 @@ class ChatRoom extends Component {
     //     userid: response,
     //     theme:require('../../assets/background.jpg')})
     //   });
-
     //   // this.initializesocket(response)
-
     //   //  this.joinRoom(response)
     //   this.joinroom(response);
-    
-
     // await _getDataAsync('token', (response) => {
     //   //console.log('token : ', response);
-
     //   //this.getMessages(response)
     //   this.setState({token: response});
     // });
@@ -305,45 +308,41 @@ class ChatRoom extends Component {
     return granted === RESULTS.GRANTED;
   };
 
-  createMessageList = (item, index) =>{
-    return( 
-        <View style={{ marginBottom: 5 }}>
-                    <View style={{ flexDirection:  "row" , margin : 4
-                  }}>
-                      <View style={{ marginTop: 5 }}>
-                      {item.msgby == ""?
-                        null
-                        :
-                        <Image style={{marginTop: 5,marginLeft: 5, width: 40,height: 40,borderRadius :20}}
-                        
-                          source={require("../../assets/user.png")}
-                         />
-                         }
-                      </View>
-                      <View style={styles.card}>
-                        <TouchableOpacity>
-                        <View
-                            style={{flex: 1, flexDirection: "row", marginRight: 10}}>
-                            <Text
-                              style={{fontSize: 12,marginRight: 20,fontWeight:'bold'}}>
-                              {item.msgby}
-                            </Text>
-                          </View>
-                          <View
-                            style={{flex: 1, flexDirection: "row", marginRight: 10}}>
-                            <Text
-                              style={{fontSize: 13,marginRight: 20}}>
-                              {item.msg}
-                            </Text>
-                          </View>
-
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-              
-              </View> 
-    )
-}
+  createMessageList = (item, index) => {
+    return (
+      <View style={{marginBottom: 5}}>
+        <View style={{flexDirection: 'row', margin: 4}}>
+          <View style={{marginTop: 5}}>
+            {item.msgby == '' ? null : (
+              <Image
+                style={{
+                  marginTop: 5,
+                  marginLeft: 5,
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                }}
+                source={require('../../assets/user.png')}
+              />
+            )}
+          </View>
+          <View style={styles.card}>
+            <TouchableOpacity>
+              <View style={{flex: 1, flexDirection: 'row', marginRight: 10}}>
+                <Text
+                  style={{fontSize: 12, marginRight: 20, fontWeight: 'bold'}}>
+                  {item.msgby}
+                </Text>
+              </View>
+              <View style={{flex: 1, flexDirection: 'row', marginRight: 10}}>
+                <Text style={{fontSize: 13, marginRight: 20}}>{item.msg}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   sendGift = (name) => {
     var message = this.state.userid + ' has gifted ' + name;
@@ -354,45 +353,59 @@ class ChatRoom extends Component {
     showMessage({
       message,
       type,
-    })
-  }   
-   createThemeList = (item, index) =>{
-    return( 
-    <TouchableOpacity 
-       style={{width:150,height:100 , margin:10}}
-         onPress={() => {
-           this.setState({
-             theme:item.src,
-             themeModal:false
-           })
-          }}>
-        <Image style={{flex:1 , width: undefined, height: undefined}}
-                            source={item.src}
-                          />                   
-      </TouchableOpacity> 
-    )
-  }
+    });
+  };
+  createThemeList = (item, index) => {
+    return (
+      <TouchableOpacity
+        style={{width: 150, height: 100, margin: 10}}
+        onPress={() => {
+          this.setState({
+            theme: item.src,
+            themeModal: false,
+          });
+        }}>
+        <Image
+          style={{flex: 1, width: undefined, height: undefined}}
+          source={item.src}
+        />
+      </TouchableOpacity>
+    );
+  };
 
-
-  createGiftsList = (item, index) =>{
-    return( 
-    <TouchableOpacity 
-       style={{width:100,height:100 , margin:10}}
-         onPress={() => {
-           this.sendGift(item.name)
-          }}>
-        <Image style={{flex:1 , width: undefined, height: undefined,resizeMode:'contain'}}
-                            source={item.src}
-                          />
-          <View style={{flexDirection:'row'}} >
-            <Image style={{ width: 30, height: 30,resizeMode:'contain'}}
-                                source={require("../../assets/coin.png")}
-                              />   
-            <Text style={{textAlign:'center',justifyContent:'center',marginTop:5}}>{item.coins}</Text>
-          </View>                    
-      </TouchableOpacity> 
-    )
-  }
+  createGiftsList = (item, index) => {
+    return (
+      <TouchableOpacity
+        style={{width: 100, height: 100, margin: 10}}
+        onPress={() => {
+          this.sendGift(item.name);
+        }}>
+        <Image
+          style={{
+            flex: 1,
+            width: undefined,
+            height: undefined,
+            resizeMode: 'contain',
+          }}
+          source={item.src}
+        />
+        <View style={{flexDirection: 'row'}}>
+          <Image
+            style={{width: 30, height: 30, resizeMode: 'contain'}}
+            source={require('../../assets/coin.png')}
+          />
+          <Text
+            style={{
+              textAlign: 'center',
+              justifyContent: 'center',
+              marginTop: 5,
+            }}>
+            {item.coins}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   addFriend = (name) => {
     //alert(name)
@@ -407,8 +420,6 @@ class ChatRoom extends Component {
       type,
     });
   };
-
-
 
   sendmessage = () => {
     var obj = {msg: this.state.msg};
@@ -485,8 +496,7 @@ class ChatRoom extends Component {
   };
 
   render() {
-
-    let Img = require("../../assets/chat.jpg")
+    let Img = require('../../assets/chat.jpg');
 
     // if (this.state.image != '') {
     //   Img = this.state.image;
@@ -497,20 +507,26 @@ class ChatRoom extends Component {
     return (
       <BackgroundImage theme={this.state.theme} style={{height: '100%'}}>
         <View style={styles.container}>
+          <NavigationEvents
+            onWillBlur={(payload) =>
+              this.setState({
+                messages: [],
+              })
+            }
+          />
 
-        
-        <NavigationEvents
-      onWillBlur={payload => this.setState({
-        messages:[]
-      })
-      }
-    />
-
-        <View 
-        style={{borderRadius:15,flexDirection:'row',backgroundColor:'#ffffff',height: 90,paddingTop:10,margin:8}}
-        >
-          <Image style={{width: 80,height: 80}}
-            source={require("../../assets/chat.jpg")}
+          <View
+            style={{
+              borderRadius: 15,
+              flexDirection: 'row',
+              backgroundColor: '#ffffff',
+              height: 90,
+              paddingTop: 10,
+              margin: 8,
+            }}>
+            <Image
+              style={{width: 80, height: 80}}
+              source={require('../../assets/chat.jpg')}
             />
 
             <View>
@@ -527,22 +543,34 @@ class ChatRoom extends Component {
                   {this.state.RoomName}
                 </Text>
 
-              
-              <TouchableOpacity
-                onPress={()=>this.setState({
-                  themeModal:true
-                })} >
-              <Image style={{marginTop: 5, marginLeft: 30,width: 20,height: 20}}
-                source={require("../../assets/changetheme.jpg")}
-                />
-              </TouchableOpacity>
-              
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      themeModal: true,
+                    })
+                  }>
+                  <Image
+                    style={{
+                      marginTop: 5,
+                      marginLeft: 30,
+                      width: 20,
+                      height: 20,
+                    }}
+                    source={require('../../assets/changetheme.jpg')}
+                  />
+                </TouchableOpacity>
 
-            <Image style={{marginTop: 5, marginLeft: 10,width: 20,height: 20,borderRadius: 20}}
-              source={require("../../assets/exit.png")}
-              /> 
-              
-            </View>
+                <Image
+                  style={{
+                    marginTop: 5,
+                    marginLeft: 10,
+                    width: 20,
+                    height: 20,
+                    borderRadius: 20,
+                  }}
+                  source={require('../../assets/exit.png')}
+                />
+              </View>
 
               <View style={{flexDirection: 'row'}}>
                 <View style={{marginLeft: 10, marginTop: 10}}>

@@ -11,13 +11,13 @@ import {
 } from 'react-native';
 
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
-import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
+import {_saveToAsync, _getDataAsync} from '../components/AsyncStorage';
 
 import firestore from '@react-native-firebase/firestore';
-import {createRooms,JoinRoom} from '../api/ApiEndPoints'
-import * as ImagePicker from "expo-image-picker";
-import * as Permissions from "expo-permissions";
-import FormData from "form-data"
+import {createRooms, JoinRoom} from '../api/ApiEndPoints';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import FormData from 'form-data';
 var _this;
 
 export default class createNewRoomScreen extends Component {
@@ -139,125 +139,114 @@ export default class createNewRoomScreen extends Component {
     }
   };
   render() {
-
-    let profileImg = require("../../assets/z.png")
+    let profileImg = require('../../assets/z.png');
 
     if (this.state.uri) {
       profileImg = this.state.uri;
     } else if (this.state.imageAvatar) {
-      profileImg = require("../../assets/z.png")
+      profileImg = require('../../assets/z.png');
     }
 
     return (
-      <View style={styles.container} >
-          <TouchableOpacity 
-            onPress={()=> this.onChangeImageClicked()}
-            style={styles.topContainer}
-            >
-              <Image style={styles.img}
-                source={profileImg}
-                />
-            </TouchableOpacity >
-
-      <View style={styles.middleContainer}>
-           <Text style={styles.text}>
-                Room Name
-            </Text>
-
-            <TextInput style={styles.textInput} 
-              placeholder=" ABC "
-              onChangeText={text => this.setState({name:text})} />
-
-
-            <Text style={styles.text}>
-                Anouncement
-            </Text>
-
-            <TextInput style={styles.textInput,{marginBottom:100}} 
-              placeholder=" Welcome everyone,let's chat and have fun together "
-              onChangeText={text => this.setState({anouncement:text})} />
-
-
-            <ActivityIndicator 
-                  style={{marginTop:20}}
-                  visible = {this.state.visible}
-                  size="large" color="#ff0000"
-                  animating={this.state.visible}>
-            </ActivityIndicator>
-
-       </View>
-
-     
-     
+      <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.createRoom()}
-          style={styles.btn}>
+          onPress={() => this.onChangeImageClicked()}
+          style={styles.topContainer}>
+          <Image style={styles.img} source={profileImg} />
+        </TouchableOpacity>
+
+        <View style={styles.middleContainer}>
+          <Text style={styles.text}>Room Name</Text>
+
+          <TextInput
+            style={styles.textInput}
+            placeholder=" ABC "
+            onChangeText={(text) => this.setState({name: text})}
+          />
+
+          <Text style={styles.text}>Anouncement</Text>
+
+          <TextInput
+            style={(styles.textInput, {marginBottom: 100})}
+            placeholder=" Welcome everyone,let's chat and have fun together "
+            onChangeText={(text) => this.setState({anouncement: text})}
+          />
+
+          <ActivityIndicator
+            style={{marginTop: 20}}
+            visible={this.state.visible}
+            size="large"
+            color="#ff0000"
+            animating={this.state.visible}></ActivityIndicator>
+        </View>
+
+        <TouchableOpacity onPress={() => this.createRoom()} style={styles.btn}>
           <Text style={styles.textCreate}> Create for free</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
- 
+
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    marginTop:50,
-    marginHorizontal:10,
-    backgroundColor:'#FCF4F4'
+  container: {
+    flex: 1,
+    marginTop: 50,
+    marginHorizontal: 10,
+    backgroundColor: '#FCF4F4',
   },
-  topContainer:{
-    borderRadius:15,
-    flexDirection:'row',
+  topContainer: {
+    borderRadius: 15,
+    flexDirection: 'row',
     height: 80,
-    margin:8,
-    alignContent:'center',
-    justifyContent:'center'
+    margin: 8,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
-  middleContainer:{
-    borderRadius:15,
-    backgroundColor:'#ffffff',
-    marginTop:50,
-    marginHorizontal:10
+  middleContainer: {
+    borderRadius: 15,
+    backgroundColor: '#ffffff',
+    marginTop: 50,
+    marginHorizontal: 10,
   },
-  btn :{
+  btn: {
     fontSize: 16,
     borderWidth: 0.5,
     textAlign: 'center',
     alignSelf: 'stretch',
-    justifyContent:'center',
-    backgroundColor : '#D82020',
-    paddingVertical:18,
-    marginHorizontal:30,
+    justifyContent: 'center',
+    backgroundColor: '#D82020',
+    paddingVertical: 18,
+    marginHorizontal: 30,
     color: '#e15d86',
     borderColor: '#000000',
     borderRadius: 30,
     margin: 15,
     textTransform: 'uppercase',
   },
-  textCreate :{
-    textAlign:'center',
-    color:'#ffffff',
-    fontSize:16
-  },
-  textInput :{
+  textCreate: {
+    textAlign: 'center',
+    color: '#ffffff',
     fontSize: 16,
-    borderBottomWidth:1,
-    borderBottomColor:'#000000',
-    marginLeft:10,
+  },
+  textInput: {
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    marginLeft: 10,
     textAlign: 'left',
     alignSelf: 'stretch',
     color: '#e15d86',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
-  text:{
-    color:"#000000",
-    marginTop:20, 
-    marginLeft:10
+  text: {
+    color: '#000000',
+    marginTop: 20,
+    marginLeft: 10,
   },
-  img:{
+  img: {
     width: 100,
     height: 100,
-    margin:10
-  }
+    margin: 10,
+  },
 });

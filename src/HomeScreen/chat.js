@@ -13,9 +13,9 @@ import {
 import {TabView, TabBar} from 'react-native-tab-view';
 
 import firestore from '@react-native-firebase/firestore';
-import {_saveToAsync,_getDataAsync} from "../components/AsyncStorage"
+import {_saveToAsync, _getDataAsync} from '../components/AsyncStorage';
 
-import { withNavigation } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
 
 class RoomHomeScreen extends Component {
   static navigationOptions = {
@@ -77,55 +77,72 @@ class RoomHomeScreen extends Component {
       });
   };
 
-  createMessagesList = (item, index) =>{
-    return(
-      <View 
-        style={{borderRadius:15,marginVertical:10}}
-      >
-          {item.msgby == "abc"
-          ?
-          <View style={{alignSelf:'flex-start'}}>
-          <View style={{
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              backgroundColor: '#f49fb6',
-              padding: 10,
-              marginHorizontal:10,
-              marginVertical:5,
-              borderRadius: 15,
-              flexDirection:'row'
-          }}>
-              <Image style={{width: 60,height: 60,borderRadius:10}}
-              source={require("../../assets/avatar.png")}
-            />
-            <Text style={{marginLeft: 10,textAlign:'center',alignSelf:'center' }}>{item.msg}</Text>
+  createMessagesList = (item, index) => {
+    return (
+      <View style={{borderRadius: 15, marginVertical: 10}}>
+        {item.msgby == 'abc' ? (
+          <View style={{alignSelf: 'flex-start'}}>
+            <View
+              style={{
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                backgroundColor: '#f49fb6',
+                padding: 10,
+                marginHorizontal: 10,
+                marginVertical: 5,
+                borderRadius: 15,
+                flexDirection: 'row',
+              }}>
+              <Image
+                style={{width: 60, height: 60, borderRadius: 10}}
+                source={require('../../assets/avatar.png')}
+              />
+              <Text
+                style={{
+                  marginLeft: 10,
+                  textAlign: 'center',
+                  alignSelf: 'center',
+                }}>
+                {item.msg}
+              </Text>
+            </View>
           </View>
+        ) : (
+          <View style={{alignSelf: 'flex-end'}}>
+            <View
+              style={{
+                alignItems: 'flex-end',
+                justifyContent: 'flex-end',
+                alignSelf: 'stretch',
+                backgroundColor: '#78849e',
+                padding: 10,
+                marginHorizontal: 10,
+                marginVertical: 5,
+                borderRadius: 15,
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  textAlign: 'center',
+                  alignSelf: 'center',
+                }}>
+                {item.msg}
+              </Text>
 
-        </View>
-        :
-        
-        <View style={{ alignSelf:'flex-end'}}>
-        <View style={{
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
-        alignSelf:'stretch',
-        backgroundColor: '#78849e',
-        padding: 10,
-        marginHorizontal:10,
-        marginVertical:5,
-        borderRadius: 15,
-        flexDirection:'row'
-          }}>
-
-            <Text style={{marginLeft: 10,textAlign:'center',alignSelf:'center' }}>{item.msg}</Text>
-
-            <Image style={{width: 60,height: 60,borderRadius:10,marginLeft:10}}
-            source={require("../../assets/avatar.png")}
-          />
-        </View>
+              <Image
+                style={{
+                  width: 60,
+                  height: 60,
+                  borderRadius: 10,
+                  marginLeft: 10,
+                }}
+                source={require('../../assets/avatar.png')}
+              />
+            </View>
+          </View>
+        )}
       </View>
-        }
-        </View>
     );
   };
 
@@ -145,21 +162,38 @@ class RoomHomeScreen extends Component {
     });
   };
 
-
   render() {
     return (
-      <KeyboardAvoidingView style={{flex:1,backgroundColor:'#dddddd'}} >
+      <KeyboardAvoidingView style={{flex: 1, backgroundColor: '#dddddd'}}>
+        <View
+          style={{
+            backgroundColor: '#D82020',
+            padding: 8,
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack(null)}>
+            <Image
+              style={{
+                marginTop: 5,
+                marginLeft: 5,
+                width: 30,
+                height: 30,
+                borderRadius: 20,
+              }}
+              source={require('../../assets/back.png')}
+            />
+          </TouchableOpacity>
 
-        <View style={{ backgroundColor:"#D82020",padding:8,flexDirection:'row'}}>
-            <TouchableOpacity
-              onPress={()=> this.props.navigation.goBack(null)}>
-              <Image style={{marginTop: 5, marginLeft: 5,width: 30,height: 30,borderRadius: 20}}
-                          source={require("../../assets/back.png")}
-                          />
-            </TouchableOpacity>
-
-            <Text style={{ backgroundColor:"#D82020",marginLeft:50,
-          color:'#ffffff',fontSize:20,alignSelf:'center'}}>Chat</Text>
+          <Text
+            style={{
+              backgroundColor: '#D82020',
+              marginLeft: 50,
+              color: '#ffffff',
+              fontSize: 20,
+              alignSelf: 'center',
+            }}>
+            Chat
+          </Text>
 
           <Text
             style={{
@@ -219,7 +253,7 @@ class RoomHomeScreen extends Component {
         </View>
       </KeyboardAvoidingView>
     );
-}
+  }
 }
 const styles = StyleSheet.create({
   tabStyle: {},

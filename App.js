@@ -1,17 +1,17 @@
 import React from 'react';
-import { View,Text} from 'react-native';
-import { createAppContainer,createSwitchNavigator} from 'react-navigation';
-import { createStackNavigator, } from 'react-navigation-stack';
-import { createDrawerNavigator, } from 'react-navigation-drawer';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import LoginScreen from "./src/Auth/login";
-import ChatRoomScreen from "./src/Room/ChatRoom";
-import RoomHomeScreen from "./src/HomeScreen/RoomHome";
+import {View, Text} from 'react-native';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
+import LoginScreen from './src/Auth/login';
+import ChatRoomScreen from './src/Room/ChatRoom';
+import RoomHomeScreen from './src/HomeScreen/RoomHome';
 
-import Moment from "./src/HomeScreen/Moment";
+import Moment from './src/HomeScreen/Moment';
 
-import PhoneAuthScreen from "./src/Auth/PhoneAuth";
-import VerifyPhoneScreen from "./src/Auth/verifyCode";
+import PhoneAuthScreen from './src/Auth/PhoneAuth';
+import VerifyPhoneScreen from './src/Auth/verifyCode';
 
 import SideMenu from './src/components/sideMenu';
 import createNewRoomScreen from './src/Room/createNewRoom';

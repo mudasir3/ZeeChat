@@ -183,9 +183,7 @@ class RoomHomeScreen extends Component {
               source={require('../../assets/pak.png')}
             />
 
-            <Text style={styles.roomListItemText}>
-              {item.name}
-            </Text>
+            <Text style={styles.roomListItemText}>{item.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
@@ -195,9 +193,7 @@ class RoomHomeScreen extends Component {
                 borderRadius: 20,
                 marginLeft: 20,
                 paddingHorizontal: 10,
-              }}>
-              
-            </View>
+              }}></View>
           </View>
 
           <Text
@@ -215,9 +211,7 @@ class RoomHomeScreen extends Component {
           <View></View>
 
           <View>
-            <View >
-            
-            </View>
+            <View></View>
           </View>
         </View>
       </TouchableOpacity>
@@ -229,8 +223,7 @@ class RoomHomeScreen extends Component {
     const routes = this.state.routes;
     return (
       <View style={{flex: 1, backgroundColor: '#dddddd'}}>
-        <View
-          style={styles.container}>
+        <View style={styles.container}>
           <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
             <Image
               style={styles.drawerImg}
@@ -238,14 +231,10 @@ class RoomHomeScreen extends Component {
             />
           </TouchableOpacity>
 
-          <Text
-            style={styles.text}>
-            Welcome To Zee
-          </Text>
+          <Text style={styles.text}>Welcome To Zee</Text>
         </View>
 
-        <View
-          style={styles.createRoomContainer}>
+        <View style={styles.createRoomContainer}>
           <TouchableOpacity
             style={styles.createRoomCard}
             onPress={() => this.props.navigation.navigate('createNewRoom')}>
@@ -256,16 +245,10 @@ class RoomHomeScreen extends Component {
 
             <View>
               <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={styles.createRoomText}>
-                  CREATE NEW ROOM
-                </Text>
+                <Text style={styles.createRoomText}>CREATE NEW ROOM</Text>
               </View>
 
-              <Text
-                style={styles.txt}>
-                Start your journey on Zee
-              </Text>
+              <Text style={styles.txt}>Start your journey on Zee</Text>
             </View>
           </TouchableOpacity>
 
@@ -284,78 +267,78 @@ class RoomHomeScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     backgroundColor: '#D82020',
-            padding: 8,
-            flexDirection: 'row'
+    padding: 8,
+    flexDirection: 'row',
   },
-  createRoomContainer:{
+  createRoomContainer: {
     flex: 1,
     marginHorizontal: 10,
     marginTop: 10,
     backgroundColor: '#dddddd',
   },
-  roomListItemContainer:{
+  roomListItemContainer: {
     borderRadius: 15,
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     height: 80,
     marginVertical: 10,
   },
-  createRoomCard:{
+  createRoomCard: {
     borderRadius: 15,
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     height: 80,
     marginTop: 10,
     elevation: 5,
-    marginBottom: 20
+    marginBottom: 20,
   },
-  createRoomImg:{
+  createRoomImg: {
     width: 40,
     height: 40,
     borderRadius: 30,
     padding: 20,
     margin: 20,
   },
-  drawerImg:{
+  drawerImg: {
     marginTop: 5,
     marginLeft: 5,
     width: 40,
     height: 40,
     borderRadius: 20,
   },
-  roomListItemImg:{
-    width: 80, 
+  roomListItemImg: {
+    width: 80,
     height: 80,
-     borderRadius: 10
+    borderRadius: 10,
   },
-  roomListItemFlagImg:{  
+  roomListItemFlagImg: {
     marginTop: 5,
     marginLeft: 5,
     width: 20,
     height: 20,
     borderRadius: 20,
   },
-  roomListItemText:{
+  roomListItemText: {
     textAlign: 'center',
-     color: '#000000',
-      marginTop: 5
+    color: '#000000',
+    marginTop: 5,
   },
-  createRoomText:{
+  createRoomText: {
     textAlign: 'center',
     color: '#000000',
     marginTop: 15,
-    marginLeft: 5
+    marginLeft: 5,
   },
-  text:{
+  text: {
     backgroundColor: '#D82020',
     marginLeft: 50,
     color: '#ffffff',
     fontSize: 20,
     alignSelf: 'center',
   },
-  txt:{ 
+  txt: {
     textAlign: 'center',
     color: '#000000',
     marginTop: 10,
