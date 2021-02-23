@@ -18,6 +18,7 @@ import {_saveToAsync} from '../components/AsyncStorage';
 import firestore from '@react-native-firebase/firestore';
 import {authenticateUser} from '../api/ApiEndPoints';
 
+import Colors from '../util/colors'
 var _this;
 export default class VerifyPhoneScreen extends Component {
   constructor(props) {
@@ -135,14 +136,14 @@ export default class VerifyPhoneScreen extends Component {
 
         <View style={styles.topContainer}>
           <Image
-            style={styles.img}
+            style={styles.Mainimg}
             source={require('../../assets/login.png')}
           />
         </View>
 
         <View style={styles.middleContainer}>
           <View style={styles.homeContainer}>
-            <Text style={styles.text}>Enter the verification code</Text>
+            <Text style={styles.EnterCodetext}>Enter the verification code</Text>
 
             <View style={styles.textInputContainer}>
               <TextInput
@@ -241,8 +242,8 @@ export default class VerifyPhoneScreen extends Component {
         <View style={styles.bottomContainer}>
           <TouchableOpacity
             onPress={() => this.confirmCode()}
-            style={styles.btnpink}>
-            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 16}}>
+            style={styles.btnRed}>
+            <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 16}}>
               Confirm Code
             </Text>
           </TouchableOpacity>
@@ -258,8 +259,8 @@ export default class VerifyPhoneScreen extends Component {
           <TouchableOpacity
             //onPress={() => this.props.navigation.navigate('Home')}
             onPress={() => this.confirmCode()}
-            style={styles.btnpink}>
-            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 16}}>
+            style={styles.btnRed}>
+            <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 16}}>
               Confirm Code
             </Text>
           </TouchableOpacity>
@@ -272,7 +273,7 @@ export default class VerifyPhoneScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FCF4F4',
+    backgroundColor:Colors.Gray ,
   },
   topView: {
     alignItems: 'center',
@@ -308,17 +309,17 @@ const styles = StyleSheet.create({
     flex: 0.1,
     marginBottom: 20,
   },
-  img: {
+  Mainimg: {
     marginTop: 5,
     marginLeft: 5,
     width: 180,
     height: 180,
     borderRadius: 90,
   },
-  text: {
+  EnterCodetext: {
     marginTop: 60,
     marginBottom: 20,
-    color: '#949494',
+    color: Colors.ICONGRAY,
     fontSize: 16,
   },
   btnwhite: {
@@ -326,27 +327,25 @@ const styles = StyleSheet.create({
     width: 150,
     borderWidth: 0.5,
     textAlign: 'left',
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.WHITE,
     paddingTop: 15,
     paddingBottom: 15,
     padding: 17,
-    color: '#e15d86',
-    borderColor: '#000000',
+    borderColor: Colors.BLACK,
     borderRadius: 15,
     margin: 15,
     textTransform: 'uppercase',
   },
-  btnpink: {
+  btnRed: {
     fontSize: 16,
     borderWidth: 0.5,
     textAlign: 'center',
     alignSelf: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#E20030',
+    backgroundColor: Colors.RED,
     paddingVertical: 18,
     marginHorizontal: 30,
-    color: '#e15d86',
-    borderColor: '#000000',
+    borderColor: Colors.BLACK,
     borderRadius: 30,
     textTransform: 'uppercase',
   },
@@ -356,35 +355,6 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 20,
     justifyContent: 'center',
-  },
-  btnwhite: {
-    fontSize: 16,
-    width: 150,
-    borderWidth: 0.5,
-    textAlign: 'left',
-    backgroundColor: '#ffffff',
-    paddingTop: 15,
-    paddingBottom: 15,
-    padding: 17,
-    color: '#e15d86',
-    borderColor: '#000000',
-    borderRadius: 15,
-    margin: 15,
-    textTransform: 'uppercase',
-  },
-  btnpink: {
-    fontSize: 16,
-    borderWidth: 0.5,
-    textAlign: 'center',
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    backgroundColor: '#E20030',
-    paddingVertical: 18,
-    marginHorizontal: 30,
-    color: '#e15d86',
-    borderColor: '#000000',
-    borderRadius: 30,
-    textTransform: 'uppercase',
   },
 
   codeInput: {
@@ -396,13 +366,13 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 15,
     paddingBottom: 15,
-    borderBottomColor: '#b9b9b9',
+    borderBottomColor: Colors.ICONGRAY,
     borderBottomWidth: 2,
     marginTop: 5,
     marginRight: 5,
     marginBottom: 5,
     marginLeft: 5,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.WHITE,
     flex: 1,
   },
 });

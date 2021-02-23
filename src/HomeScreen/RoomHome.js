@@ -17,6 +17,7 @@ import {getRooms} from '../api/ApiEndPoints';
 
 import {withNavigation} from 'react-navigation';
 
+import Colors from '../util/colors'
 class RoomHomeScreen extends Component {
   static navigationOptions = {
     title: 'HeaderTitle',
@@ -187,22 +188,11 @@ class RoomHomeScreen extends Component {
           </View>
 
           <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                backgroundColor: 'green',
-                borderRadius: 20,
-                marginLeft: 20,
-                paddingHorizontal: 10,
-              }}></View>
+            
           </View>
 
           <Text
-            style={{
-              textAlign: 'center',
-              color: '#000000',
-              marginTop: 5,
-              marginLeft: 10,
-            }}>
+            style={styles.welcomeMembersText}>
             Welcome New Members
           </Text>
         </View>
@@ -231,7 +221,7 @@ class RoomHomeScreen extends Component {
             />
           </TouchableOpacity>
 
-          <Text style={styles.text}>Welcome To Zee</Text>
+          <Text style={styles.Welcometext}>Welcome To Zee</Text>
         </View>
 
         <View style={styles.createRoomContainer}>
@@ -248,7 +238,7 @@ class RoomHomeScreen extends Component {
                 <Text style={styles.createRoomText}>CREATE NEW ROOM</Text>
               </View>
 
-              <Text style={styles.txt}>Start your journey on Zee</Text>
+              <Text style={styles.startJourneyText}>Start your journey on Zee</Text>
             </View>
           </TouchableOpacity>
 
@@ -268,7 +258,7 @@ class RoomHomeScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#D82020',
+    backgroundColor: Colors.RED,
     padding: 8,
     flexDirection: 'row',
   },
@@ -276,19 +266,19 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     marginTop: 10,
-    backgroundColor: '#dddddd',
+    backgroundColor: Colors.OFFWHITE,
   },
   roomListItemContainer: {
     borderRadius: 15,
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.WHITE,
     height: 80,
     marginVertical: 10,
   },
   createRoomCard: {
     borderRadius: 15,
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.WHITE,
     height: 80,
     marginTop: 10,
     elevation: 5,
@@ -322,51 +312,35 @@ const styles = StyleSheet.create({
   },
   roomListItemText: {
     textAlign: 'center',
-    color: '#000000',
+    color: Colors.BLACK,
     marginTop: 5,
   },
   createRoomText: {
     textAlign: 'center',
-    color: '#000000',
+    color: Colors.BLACK,
     marginTop: 15,
     marginLeft: 5,
   },
-  text: {
-    backgroundColor: '#D82020',
+  Welcometext: {
     marginLeft: 50,
-    color: '#ffffff',
+    color: Colors.WHITE,
     fontSize: 20,
     alignSelf: 'center',
   },
-  txt: {
+  startJourneyText: {
     textAlign: 'center',
-    color: '#000000',
+    color: Colors.BLACK,
     marginTop: 10,
     marginLeft: 5,
   },
-  tabStyle: {},
-  scrollStyle: {
-    backgroundColor: 'white',
-    paddingLeft: 65,
-    paddingRight: 65,
-    // justifyContent: 'center',
-  },
-  tabBarTextStyle: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: '#000000',
-  },
-  underlineStyle: {
-    height: 3,
-    backgroundColor: 'red',
-    borderRadius: 3,
-    width: 15,
+  welcomeMembersText:{
+      textAlign: 'center',
+      color: Colors.BLACK,
+      marginTop: 5,
+      marginLeft: 10,
   },
   tabbar: {
-    backgroundColor: '#D82020',
-  },
-  indicator: {
-    backgroundColor: '#ffeb3b',
+    backgroundColor: Colors.RED,
   },
   label: {
     fontWeight: '400',
