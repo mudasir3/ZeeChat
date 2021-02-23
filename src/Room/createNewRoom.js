@@ -20,6 +20,7 @@ import * as Permissions from 'expo-permissions';
 import FormData from 'form-data';
 var _this;
 
+import Colors from '../util/colors'
 export default class createNewRoomScreen extends Component {
   constructor(props) {
     super(props);
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 50,
     marginHorizontal: 10,
-    backgroundColor: '#FCF4F4',
+    backgroundColor: Colors.Gray,
   },
   topContainer: {
     borderRadius: 15,
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   middleContainer: {
     borderRadius: 15,
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.WHITE,
     marginTop: 50,
     marginHorizontal: 10,
   },
@@ -215,32 +216,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#D82020',
+    backgroundColor: Colors.RED,
     paddingVertical: 18,
     marginHorizontal: 30,
-    color: '#e15d86',
-    borderColor: '#000000',
+    borderColor: Colors.BLACK,
     borderRadius: 30,
     margin: 15,
     textTransform: 'uppercase',
   },
   textCreate: {
     textAlign: 'center',
-    color: '#ffffff',
+    color: Colors.WHITE,
     fontSize: 16,
   },
   textInput: {
     fontSize: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#000000',
+    borderBottomColor: Colors.BLACK,
     marginLeft: 10,
     textAlign: 'left',
     alignSelf: 'stretch',
-    color: '#e15d86',
     textTransform: 'uppercase',
   },
   text: {
-    color: '#000000',
+    color:Colors.BLACK,
     marginTop: 20,
     marginLeft: 10,
   },

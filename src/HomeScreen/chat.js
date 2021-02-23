@@ -17,6 +17,7 @@ import {_saveToAsync, _getDataAsync} from '../components/AsyncStorage';
 
 import {withNavigation} from 'react-navigation';
 
+import Colors from '../util/colors'
 class RoomHomeScreen extends Component {
   static navigationOptions = {
     title: 'HeaderTitle',

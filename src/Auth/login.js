@@ -31,6 +31,8 @@ import {_saveToAsync} from '../components/AsyncStorage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
+import Colors from '../util/colors'
+
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -164,17 +166,17 @@ export default class LoginScreen extends Component {
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <Image
-            style={styles.img}
+            style={styles.Mainimg}
             source={require('../../assets/login.png')}
           />
         </View>
 
-        <View style={styles.text}>
+        <View style={styles.loginText}>
           <Text style={{fontSize: 24}}>LOGIN </Text>
         </View>
 
         <View style={styles.mainContainer}>
-          <View style={styles.homeContainer}>
+          <View style={styles.bottomContainer}>
             <TouchableOpacity
               onPress={this.facebookLogin}
               style={styles.btnwhiteoutline}>
@@ -196,7 +198,7 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E20030',
+    backgroundColor: Colors.RED,
   },
   innerContainer: {
     alignContent: 'center',
@@ -210,14 +212,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 0.8,
   },
-  img: {
+  Mainimg: {
     marginTop: 5,
     marginLeft: 5,
     width: 200,
     height: 200,
     borderRadius: 100,
   },
-  text: {
+  loginText: {
     alignItems: 'center',
     marginTop: 80,
   },
@@ -228,10 +230,10 @@ const styles = StyleSheet.create({
   },
   redText: {
     textAlign: 'center',
-    color: '#E20030',
+    color: Colors.RED,
     fontSize: 16,
   },
-  homeContainer: {
+  bottomContainer: {
     alignItems: 'center',
     padding: 10,
     margin: 10,
@@ -244,11 +246,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.WHITE,
     paddingVertical: 18,
     marginHorizontal: 30,
-    color: '#e15d86',
-    borderColor: '#000000',
+    borderColor: Colors.BLACK,
     borderRadius: 30,
     margin: 15,
     textTransform: 'uppercase',
@@ -259,9 +260,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#E20030',
-    color: '#e15d86',
-    borderColor: '#ffffff',
+    backgroundColor: Colors.RED,
+    borderColor:Colors.WHITE,
     borderWidth: 4,
     paddingVertical: 18,
     borderRadius: 30,
