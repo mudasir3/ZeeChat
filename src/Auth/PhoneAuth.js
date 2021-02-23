@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 import {authenticateUser} from '../api/ApiEndPoints';
 import {_saveToAsync} from '../components/AsyncStorage';
 
+import Colors from '../util/colors'
 export default class PhoneAuthScreen extends Component {
   constructor(props) {
     super(props);
@@ -107,11 +108,11 @@ export default class PhoneAuthScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.topView}></View>
+        <View style={styles.topPlaceHolder}></View>
 
         <View style={styles.topContainer}>
           <Image
-            style={styles.img}
+            style={styles.Mainimg}
             source={require('../../assets/login.png')}
           />
         </View>
@@ -119,7 +120,7 @@ export default class PhoneAuthScreen extends Component {
         <View style={styles.middleCntainer}>
           <View style={styles.homeContainer}>
             {this.state.visibletxt ? (
-              <Text style={styles.text}>Enter Phone Number to Login</Text>
+              <Text style={styles.EnterPhonetext}>Enter Phone Number to Login</Text>
             ) : (
               <Text style={{marginTop: 60, marginBottom: 20}}></Text>
             )}
@@ -143,8 +144,8 @@ export default class PhoneAuthScreen extends Component {
         <View style={styles.bottomContainer}>
           <TouchableOpacity
             onPress={() => this.signInWithPhoneNumber(this.state.number)}
-            style={styles.btnpink}>
-            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 16}}>
+            style={styles.btnRed}>
+            <Text style={{textAlign: 'center', color: Colors.WHITE, fontSize: 16}}>
               Send Code
             </Text>
           </TouchableOpacity>
@@ -157,9 +158,9 @@ export default class PhoneAuthScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FCF4F4',
+    backgroundColor: Colors.Gray,
   },
-  topView: {
+  topPlaceHolder: {
     alignItems: 'center',
     marginTop: 30,
   },
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 0.8,
   },
-  img: {
+  Mainimg: {
     marginTop: 5,
     marginLeft: 5,
     width: 180,
@@ -195,10 +196,10 @@ const styles = StyleSheet.create({
     flex: 0.1,
     marginBottom: 20,
   },
-  text: {
+  EnterPhonetext: {
     marginTop: 60,
     marginBottom: 20,
-    color: '#949494',
+    color: Colors.ICONGRAY,
     fontSize: 16,
   },
   textInput: {
@@ -206,26 +207,25 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     textAlign: 'left',
     alignSelf: 'stretch',
-    backgroundColor: '#ffffff',
-    color: '#e15d86',
-    borderColor: '#000000',
+    backgroundColor: Colors.WHITE,
+    color: Colors.ICONGRAY,
+    borderColor: Colors.BLACK,
     borderRadius: 15,
     paddingVertical: 15,
     paddingHorizontal: 20,
     marginVertical: 20,
     textTransform: 'uppercase',
   },
-  btnpink: {
+  btnRed: {
     fontSize: 16,
     borderWidth: 0.5,
     textAlign: 'center',
     alignSelf: 'stretch',
     justifyContent: 'center',
-    backgroundColor: '#E20030',
+    backgroundColor: Colors.RED,
     paddingVertical: 18,
     marginHorizontal: 30,
-    color: '#e15d86',
-    borderColor: '#000000',
+    borderColor: Colors.BLACK,
     borderRadius: 30,
     textTransform: 'uppercase',
   },

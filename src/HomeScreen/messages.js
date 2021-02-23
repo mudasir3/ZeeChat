@@ -9,14 +9,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {TabView, TabBar} from 'react-native-tab-view';
-
 import firestore from '@react-native-firebase/firestore';
 
 import {_saveToAsync, _getDataAsync} from '../components/AsyncStorage';
 
 import {withNavigation} from 'react-navigation';
 
+import Colors from '../util/colors'
 class RoomHomeScreen extends Component {
   state = {
     FriendsList: [
@@ -123,7 +122,7 @@ class RoomHomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FCF3F4',
+    backgroundColor: Colors.Gray,
   },
   flatlist: {
     borderRadius: 20,
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   topContainer: {
-    backgroundColor: '#D82020',
+    backgroundColor: Colors.RED,
     padding: 8,
     flexDirection: 'row',
     alignSelf: 'stretch',
@@ -143,7 +142,7 @@ const styles = StyleSheet.create({
   listItemContainer: {
     borderRadius: 15,
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.WHITE,
     height: 80,
     marginVertical: 10,
   },
@@ -174,43 +173,13 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     textAlign: 'center',
-    color: '#000000',
+    color: Colors.BLACK,
     marginTop: 5,
     marginLeft: 10,
   },
   text: {
-    backgroundColor: '#D82020',
-    color: '#ffffff',
+    color: Colors.WHITE,
     fontSize: 20,
-  },
-  scrollStyle: {
-    backgroundColor: 'white',
-    paddingLeft: 65,
-    paddingRight: 65,
-    // justifyContent: 'center',
-  },
-  tabBarTextStyle: {
-    fontSize: 14,
-    fontWeight: 'normal',
-    color: '#000000',
-  },
-  underlineStyle: {
-    height: 3,
-    backgroundColor: 'red',
-    borderRadius: 3,
-    width: 15,
-  },
-  tabbar: {
-    backgroundColor: '#D82020',
-  },
-  indicator: {
-    backgroundColor: '#ffeb3b',
-  },
-  label: {
-    fontWeight: '400',
-  },
-  tabStyle: {
-    width: 'auto',
   },
 });
 
